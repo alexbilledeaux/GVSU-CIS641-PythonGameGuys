@@ -11,9 +11,9 @@ Time: 5:30 pm
 Discussion points:
 1. Homework due 10-13
 2. Dividing up requirements covering so we don't overlap
-2.1 Alex - in run combat/movement
-2.2 Dan - requirements for level generation
-2.3 Luis - main menu/run setup
+  2.1. Alex - in run combat/movement
+  2.2. Dan - requirements for level generation
+  2.3. Luis - main menu/run setup
 
 Goals for next week (include responsibilities)
 * get github.io page up (Alex does theme, Dan does overview, Luis does links)
