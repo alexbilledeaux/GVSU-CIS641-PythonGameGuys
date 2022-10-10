@@ -18,3 +18,4 @@ Goals for next week (include responsibilities)
 * create more CRC cards (all)
   * Alex will do Consumable
   * Dan will do GameMap
+  * Luis will do Fighter
