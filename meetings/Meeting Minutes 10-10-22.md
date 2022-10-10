@@ -13,7 +13,6 @@ Discussion points:
 2. Requirements Merging
 
 Goals for next week (include responsibilities)
-* Merge Requirements into SRS (Dan)
 * Work on expanding requirements list (all)
 * create more CRC cards (all)
   * Alex will do Consumable
