@@ -30,7 +30,6 @@ This document holds all the functional and non-functional requirements for our b
     3. Each level shall be completable within 5 minutes.
     4. One full run shall take no more than 30 minutes.
     5. The player character shall have a maximum number of hitpoints that cannot be exceeded.
-    6. The game shall have three playable character classes with different playstyles.
 
 2. Security Requirements
     1. The game shall not store any information about the user.
