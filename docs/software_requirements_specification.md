@@ -17,10 +17,14 @@ This document holds all the functional and non-functional requirements for our b
    4. The enemy stats shall grow as the depth increases.
    
 3. Combat
-   1. The game shall remove an enemy’s icon from the map when the enemy’s health reaches 0.
-   2. The player shall attack an enemy by attempting to move onto the enemy’s tile.
+   1. The game shall remove an enemy's icon from the map when the enemy's health reaches 0.
+   2. The player shall attack an enemy by attempting to move onto the enemy's tile.
    3. The game shall prevent the player from using a healing consumable when they are at maximum hitpoints.
    4. The game shall prevent the player from moving into a tile that contains a wall.
+   5. Enemies shall attempt to defeat the player by attacking them.
+   6. The game shall end if the player's health reaches 0.
+   7. An entity's health shall decrease by the attacker’s power minus the defender's defense when it is attacked.
+
 
 # Non-Functional Requirements
 
