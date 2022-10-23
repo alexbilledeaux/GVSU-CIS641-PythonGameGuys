@@ -1,0 +1,6 @@
+# Saved games
+*.sav
+
+__pycache__/
+.python-version
+.venv/
