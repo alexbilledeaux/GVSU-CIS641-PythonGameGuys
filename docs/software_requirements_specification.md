@@ -15,6 +15,8 @@ This document holds all the functional and non-functional requirements for our b
    2. The level generator shall generate a level where the exit is reachable.
    3. The level generator shall add at least 3 items per level.
    4. The enemy stats shall grow as the depth increases.
+   5. The items and enemies added to the map shall grow better as the depth grows.
+   6. The level generator shall have two different map creation algorithms.
    
 3. Combat
    1. The game shall remove an enemy's icon from the map when the enemy's health reaches 0.
