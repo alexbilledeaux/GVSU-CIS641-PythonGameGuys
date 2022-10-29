@@ -51,6 +51,12 @@ fireball_scroll = Item(
     name="Fireball Scroll",
     consumable=consumable.FireballDamageConsumable(damage=12, radius=3),
 )
+quiver = Item(
+    char="U",
+    color=(51, 0, 0),
+    name="Quiver of Arrows",
+    consumable=consumable.Quiver(),
+)
 health_potion = Item(
     char="!",
     color=(127, 0, 255),
@@ -69,6 +75,8 @@ dagger = Item(
 )
 
 sword = Item(char="/", color=(0, 191, 255), name="Sword", equippable=equippable.Sword())
+
+short_bow = Item(char="D", color=(51, 0, 0), name="Short Bow", equippable=equippable.ShortBow())
 
 leather_armor = Item(
     char="[",

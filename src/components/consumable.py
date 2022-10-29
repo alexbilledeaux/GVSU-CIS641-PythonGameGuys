@@ -154,3 +154,38 @@ class LightningDamageConsumable(Consumable):
             self.consume()
         else:
             raise Impossible("No enemy is close enough to strike.")
+
+class Quiver(Consumable):
+    def __init__(self) -> None:
+        self.damage = 0
+    
+    def get_action(self, consumer: Actor) -> SingleRangedAttackHandler:
+        self.engine.message_log.add_message(
+            "Select a target location.", color.needs_target,
+        )
+        return SingleRangedAttackHandler(
+            self.engine,
+            callback=lambda xy: actions.ItemAction(consumer, self.parent, xy),
+        )
+    
+    def activate(self, action: actions.ItemAction) -> None:
+        consumer = action.entity
+        self.damage = consumer.fighter.power + 1
+        target = action.target_actor
+
+
+        if consumer.equipment.weapon == None:
+            raise Impossible("You cannot fire an arrow without a bow equipped!")
+        if not consumer.equipment.weapon.name == "Short Bow":
+            raise Impossible("You cannot fire an arrow without a bow equipped!")
+        if not self.engine.game_map.visible[action.target_xy]:
+            raise Impossible("You cannot target an area that you cannot see.")
+        if not target:
+            raise Impossible("You must select an enemy to target.")
+        if target is consumer:
+            raise Impossible("You cannot shoot yourself!")
+        
+        self.engine.message_log.add_message(
+                f"The {target.name} is hit by your arrow, taking {self.damage} damage!"
+            )
+        target.fighter.take_damage(self.damage)
