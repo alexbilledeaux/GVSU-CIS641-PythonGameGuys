@@ -20,7 +20,7 @@ from game_map import GameWorld
 background_image = tcod.image.load("menu_background.png")[:, :, :3]
 
 
-def new_game(player_class: str) -> Engine:
+def new_game(selected_class) -> Engine:
     """Return a brand new game session as an Engine instance."""
     map_width = 80
     map_height = 43
@@ -29,8 +29,7 @@ def new_game(player_class: str) -> Engine:
     room_min_size = 6
     max_rooms = 30
 
-    # TODO (luis): instantiate player based on player class 
-    player = copy.deepcopy(entity_factories.player)
+    player = copy.deepcopy(selected_class)
 
     engine = Engine(player=player)
 
@@ -51,21 +50,8 @@ def new_game(player_class: str) -> Engine:
         "Hello and welcome, adventurer, to yet another dungeon!", color.welcome_text
     )
 
-    bow = copy.deepcopy(entity_factories.short_bow)
-    leather_armor = copy.deepcopy(entity_factories.leather_armor)
-    quiver = copy.deepcopy(entity_factories.quiver)
+    player.fighter.give_loadout(engine.player)
 
-    bow.parent = player.inventory
-    leather_armor.parent = player.inventory
-    quiver.parent = player.inventory
-
-    player.inventory.items.append(bow)
-    player.equipment.toggle_equip(bow, add_message=False)
-
-    player.inventory.items.append(leather_armor)
-    player.equipment.toggle_equip(leather_armor, add_message=False)
-
-    player.inventory.items.append(quiver)
     return engine
 
 
@@ -147,7 +133,7 @@ class ClassMenu(input_handlers.BaseEventHandler):
 
         menu_width = 24
         for i, text in enumerate(
-            ["[R] Ranger", "[A] Archer", "[M] Mage", "[B] Back to Main Menu"]
+            ["[R] Ranger", "[W] Warrior", "[M] Mage", "[B] Back to Main Menu"]
         ):
             console.print(
                 console.width // 2,
@@ -162,14 +148,14 @@ class ClassMenu(input_handlers.BaseEventHandler):
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[input_handlers.BaseEventHandler]:
         if event.sym == tcod.event.K_b:
             return MainMenu()
-        player_class = None
+        selected_class = None
         if event.sym == tcod.event.K_r:
-            player_class = "ranger"
-        elif event.sym == tcod.event.K_a:
-            player_class = "archer"
+            selected_class = entity_factories.player_ranger
+        elif event.sym == tcod.event.K_w:
+            selected_class = entity_factories.player_warrior
         elif event.sym == tcod.event.K_m:
-            player_class = "mage"
+            selected_class = entity_factories.player_mage
         
-        if player_class:
-            return input_handlers.MainGameEventHandler(new_game(player_class))
+        if selected_class:
+            return input_handlers.MainGameEventHandler(new_game(selected_class))
         return None

@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import copy
 from typing import TYPE_CHECKING
 
 import color
 from components.base_component import BaseComponent
 from render_order import RenderOrder
+import entity_factories
 
 if TYPE_CHECKING:
     from entity import Actor
@@ -17,6 +19,7 @@ class Fighter(BaseComponent):
         self._hp = hp
         self.base_defense = base_defense
         self.base_power = base_power
+        self.fov = 8
 
     @property
     def hp(self) -> int:
@@ -86,3 +89,43 @@ class Fighter(BaseComponent):
 
     def take_damage(self, amount: int) -> None:
         self.hp -= amount
+    
+    def give_loadout(self, player) -> None:
+        items = self.starting_items
+        equipment = self.starting_equipment
+        for item in items:
+            _copy = copy.deepcopy(item)
+            _copy.parent = player.inventory
+            player.inventory.items.append(_copy)
+
+        for equippable in equipment:
+            _copy = copy.deepcopy(equippable)
+            _copy.parent = player.inventory
+            player.inventory.items.append(_copy)
+            player.equipment.toggle_equip(_copy, add_message=False)
+
+class Ranger(Fighter):
+    def __init__(self, hp: int, base_defense: int, base_power: int):
+        super().__init__(hp, base_defense, base_power)
+        self.fov = 16
+        self.starting_items = [entity_factories.quiver]
+        self.starting_equipment = [entity_factories.short_bow, entity_factories.leather_armor]
+
+class Warrior(Fighter):
+    def __init__(self, hp: int, base_defense: int, base_power: int):
+        super().__init__(hp, base_defense, base_power)
+        self.fov = 8
+        self.starting_items = []
+        self.starting_equipment = [entity_factories.sword, entity_factories.chain_mail]
+
+class Mage(Fighter):
+    def __init__(self, hp: int, base_defense: int, base_power: int):
+        super().__init__(hp, base_defense, base_power)
+        self.fov = 10
+        self.starting_items = [entity_factories.lightning_scroll, entity_factories.fireball_scroll, entity_factories.confusion_scroll]
+        self.starting_equipment = []
+
+    # We can use methods like this to apply custom logic at certain event hooks based on the player's class
+    def use_consumable(self) -> None:
+        # Have a % chance of recovering the scroll
+        pass
