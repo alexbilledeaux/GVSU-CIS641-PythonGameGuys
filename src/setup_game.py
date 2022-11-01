@@ -20,7 +20,7 @@ from game_map import GameWorld
 background_image = tcod.image.load("menu_background.png")[:, :, :3]
 
 
-def new_game() -> Engine:
+def new_game(player_class: str) -> Engine:
     """Return a brand new game session as an Engine instance."""
     map_width = 80
     map_height = 43
@@ -29,6 +29,7 @@ def new_game() -> Engine:
     room_min_size = 6
     max_rooms = 30
 
+    # TODO (luis): instantiate player based on player class 
     player = copy.deepcopy(entity_factories.player)
 
     engine = Engine(player=player)
@@ -125,6 +126,50 @@ class MainMenu(input_handlers.BaseEventHandler):
                 traceback.print_exc()  # Print to stderr.
                 return input_handlers.PopupMessage(self, f"Failed to load save:\n{exc}")
         elif event.sym == tcod.event.K_n:
-            return input_handlers.MainGameEventHandler(new_game())
+            return ClassMenu()
         
+        return None
+
+
+class ClassMenu(input_handlers.BaseEventHandler):
+    """Handle the player class menu rendering and input"""
+
+    def on_render(self, console: tcod.Console) -> None:
+        console.draw_semigraphics(background_image, 0, 0)
+
+        console.print(
+            console.width // 2,
+            console.height // 2 - 4,
+            "Select a player class",
+            fg=color.menu_title,
+            alignment=tcod.CENTER,
+        )
+
+        menu_width = 24
+        for i, text in enumerate(
+            ["[R] Ranger", "[A] Archer", "[M] Mage", "[B] Back to Main Menu"]
+        ):
+            console.print(
+                console.width // 2,
+                console.height // 2 - 2 + i,
+                text.ljust(menu_width),
+                fg=color.menu_text,
+                bg=color.black,
+                alignment=tcod.CENTER,
+                bg_blend=tcod.BKGND_ALPHA(64),
+            )
+
+    def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[input_handlers.BaseEventHandler]:
+        if event.sym == tcod.event.K_b:
+            return MainMenu()
+        player_class = None
+        if event.sym == tcod.event.K_r:
+            player_class = "ranger"
+        elif event.sym == tcod.event.K_a:
+            player_class = "archer"
+        elif event.sym == tcod.event.K_m:
+            player_class = "mage"
+        
+        if player_class:
+            return input_handlers.MainGameEventHandler(new_game(player_class))
         return None
