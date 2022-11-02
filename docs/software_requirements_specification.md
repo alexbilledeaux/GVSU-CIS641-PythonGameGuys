@@ -17,6 +17,9 @@ This document holds all the functional and non-functional requirements for our b
    4. The enemy stats shall grow as the depth increases.
    5. The items and enemies added to the map shall grow better as the depth grows.
    6. The level generator shall have two different map creation algorithms.
+   7. The game shall display tiles of the map as they are seen by the player.
+   8. The game shall show entities on the map while they are in the player's field of view.
+   9. The game shall hide entities on the map while they are not in the player's field of view.
    
 3. Combat
    1. The game shall remove an enemy's icon from the map when the enemy's health reaches 0.
@@ -26,6 +29,10 @@ This document holds all the functional and non-functional requirements for our b
    5. Enemies shall attempt to defeat the player by attacking them.
    6. The game shall end if the player's health reaches 0.
    7. An entity's health shall decrease by the attacker’s power minus the defender's defense when it is attacked.
+   8. The player shall only be able to equip one set of armor at a time.
+   9. The player shall only be able to equip one weapon at a time.
+   10. The game shall display a message when the player successfully equips a piece of equipment.
+   10. The game shall display a message when the player successfully unequips a piece of equipment.
 
 
 # Non-Functional Requirements
@@ -36,6 +43,8 @@ This document holds all the functional and non-functional requirements for our b
     3. Each level shall be completable within 5 minutes.
     4. One full run shall take no more than 30 minutes.
     5. The player character shall have a maximum number of hitpoints that cannot be exceeded.
+    6. The game shall respond to player input within 0.5 seconds.
+    7. A saved game file shall not exceed 2mb.
 
 2. Security Requirements
     1. The game shall not store any information about the user.
@@ -47,3 +56,4 @@ This document holds all the functional and non-functional requirements for our b
 
 4. Cultural and Political Requirements
     1. The menu options shall be displayed in English.
+    2. The entity class shall be identifiable by alphanumerics rather than color.
