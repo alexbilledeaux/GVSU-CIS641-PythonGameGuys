@@ -4,6 +4,7 @@ import random
 from typing import Dict, Iterator, List, Tuple, TYPE_CHECKING
 
 import tcod
+import numpy as np # type: ignore
 
 import entity_factories
 from game_map import GameMap
@@ -203,3 +204,90 @@ def generate_dungeon(
         rooms.append(new_room)
 
     return dungeon
+
+def generate_cave(
+    max_rooms: int,
+    room_min_size: int,
+    room_max_size: int,
+    map_width: int,
+    map_height: int,
+    engine: Engine,
+) -> GameMap:
+    """Generate a new cave map."""
+    player = engine.player
+    chanceToStartAlive = 0.65
+    stepCount = 2
+    dungeon = GameMap(engine, map_width, map_height, entities=[player])
+
+    cellMap = []
+    for j in range(map_width):
+        row = []
+        for k in range(map_height):
+            if random.random() < chanceToStartAlive:
+                row.append(True)
+            else:
+                row.append(False)
+        cellMap.append(row)
+
+    cellMap = doSimulationStep(cellMap, map_width, map_height)
+    cellMap = doSimulationStep(cellMap, map_width, map_height)
+    cellMap = doSimulationStep(cellMap, map_width, map_height)
+    cellMap = doSimulationStep(cellMap, map_width, map_height)
+    cellMap = doSimulationStep(cellMap, map_width, map_height)
+    cellMap = doSimulationStep(cellMap, map_width, map_height)
+    
+    for x in range(len(cellMap)):
+        for y in range(len(cellMap[x])):
+            if cellMap[x][y]:
+                dungeon.tiles[x, y] = tile_types.floor
+            else:
+                dungeon.tiles[x, y] = tile_types.wall
+    
+    player.place(39, 20, dungeon)
+
+    return dungeon
+
+def doSimulationStep(
+    oldMap,
+    map_width: int,
+    map_height: int,
+):
+    newMap = []
+    for j in range(map_width):
+        row = []
+        for k in range(map_height):
+            row.append(False)
+        newMap.append(row)
+
+    for x in range(map_width):
+        for y in range(map_height):
+            nbs = countAliveNeighbors(oldMap, x, y)
+            if oldMap[x][y]:
+                if nbs <= 3:
+                    newMap[x][y] = True
+            else:
+                if nbs < 4:
+                    newMap[x][y] = True
+    
+    return newMap
+
+
+
+def countAliveNeighbors(
+    map,
+    x: int,
+    y: int,
+):
+    count = 0
+    for i in range(-1, 2):
+        for j in range(-1, 2):
+            n_x = x + i
+            n_y = y + j
+            if i == 0 & j == 0:
+                pass
+            elif n_x < 0 | n_x > len(map) | n_y < 0 | n_y > len(map[x]):
+                pass
+            elif(not map[x][y]):
+                count = count + 1
+    
+    return count

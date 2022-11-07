@@ -127,15 +127,29 @@ class GameWorld:
         self.current_floor = current_floor
 
     def generate_floor(self) -> None:
-        from procgen import generate_dungeon
+        if self.current_floor%2 == 0:
+            from procgen import generate_dungeon
 
-        self.current_floor += 1
+            self.current_floor += 1
 
-        self.engine.game_map = generate_dungeon(
-            max_rooms=self.max_rooms,
-            room_min_size=self.room_min_size,
-            room_max_size=self.room_max_size,
-            map_width=self.map_width,
-            map_height=self.map_height,
-            engine=self.engine,
-        )
+            self.engine.game_map = generate_dungeon(
+               max_rooms=self.max_rooms,
+               room_min_size=self.room_min_size,
+                room_max_size=self.room_max_size,
+                map_width=self.map_width,
+               map_height=self.map_height,
+               engine=self.engine,
+            )
+        else:
+            from procgen import generate_cave
+
+            self.current_floor += 1
+
+            self.engine.game_map = generate_cave(
+               max_rooms=self.max_rooms,
+               room_min_size=self.room_min_size,
+                room_max_size=self.room_max_size,
+                map_width=self.map_width,
+               map_height=self.map_height,
+               engine=self.engine,
+            )
