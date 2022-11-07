@@ -215,7 +215,8 @@ def generate_cave(
 ) -> GameMap:
     """Generate a new cave map."""
     player = engine.player
-    chanceToStartAlive = 0.65
+    chanceToStartAlive = 0.3
+    # alive in this context means being a wall rather than a floor
     stepCount = 2
     dungeon = GameMap(engine, map_width, map_height, entities=[player])
 
@@ -233,15 +234,15 @@ def generate_cave(
     cellMap = doSimulationStep(cellMap, map_width, map_height)
     cellMap = doSimulationStep(cellMap, map_width, map_height)
     cellMap = doSimulationStep(cellMap, map_width, map_height)
-    cellMap = doSimulationStep(cellMap, map_width, map_height)
-    cellMap = doSimulationStep(cellMap, map_width, map_height)
+    
+    
     
     for x in range(len(cellMap)):
         for y in range(len(cellMap[x])):
             if cellMap[x][y]:
-                dungeon.tiles[x, y] = tile_types.floor
-            else:
                 dungeon.tiles[x, y] = tile_types.wall
+            else:
+                dungeon.tiles[x, y] = tile_types.floor
     
     player.place(39, 20, dungeon)
 
@@ -263,10 +264,10 @@ def doSimulationStep(
         for y in range(map_height):
             nbs = countAliveNeighbors(oldMap, x, y)
             if oldMap[x][y]:
-                if nbs <= 3:
+                if nbs >= 3:
                     newMap[x][y] = True
             else:
-                if nbs < 4:
+                if nbs > 4:
                     newMap[x][y] = True
     
     return newMap
@@ -286,8 +287,8 @@ def countAliveNeighbors(
             if i == 0 & j == 0:
                 pass
             elif n_x < 0 | n_x > len(map) | n_y < 0 | n_y > len(map[x]):
-                pass
-            elif(not map[x][y]):
+                count = count + 1
+            elif(map[x][y]):
                 count = count + 1
     
     return count
