@@ -256,8 +256,11 @@ def generate_cave(
 
     
     player.place(rand_x, rand_y, dungeon)
-
-    end = random.randint(len(list)/2, len(list) - 1)
+    if len(list) % 2 == 1:
+        startInt = (len(list) + 1)/2
+    else:
+        startInt = len(list)/2
+    end = random.randint(startInt, len(list) - 1)
     dungeon.tiles[list[end][0], list[end][1]] = tile_types.down_stairs
     dungeon.downstairs_location = (list[end][0], list[end][1])
 
