@@ -73,6 +73,9 @@ class ItemAction(Action):
     def perform(self) -> None:
         """Invoke the items ability, this action will be given to provide context."""
         if self.item.consumable:
+            # Event hook for class abilities
+            self.entity.fighter.use_consumable(self.item)
+            # Activate consumable effect
             self.item.consumable.activate(self)
 
 
@@ -143,6 +146,11 @@ class MeleeAction(ActionWithDirection):
 
         damage = self.entity.fighter.power - target.fighter.defense
 
+        # Event hook for class abilities
+        if self.entity is self.engine.player:
+            self.entity.fighter.on_enemy_hit(target)
+
+        # Add message log for the attack
         attack_desc = f"{self.entity.name.capitalize()} attacks {target.name}"
         if self.entity is self.engine.player:
             attack_color = color.player_atk

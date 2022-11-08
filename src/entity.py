@@ -78,7 +78,7 @@ class Entity:
         """
         Return the distance between the current entity and the given (x, y) coordinate.
         """
-        return math.sqrt((x - self.x) ** 2 - (y - self.y) ** 2)
+        return math.sqrt(abs((x - self.x) ** 2 - (y - self.y) ** 2))
 
     def move(self, dx: int, dy: int) -> None:
         # move the entity by a given amount

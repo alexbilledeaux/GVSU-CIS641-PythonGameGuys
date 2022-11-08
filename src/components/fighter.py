@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import copy
+import random
 from typing import TYPE_CHECKING
 
 import color
 from components.base_component import BaseComponent
+import components.ai
 from render_order import RenderOrder
 
 if TYPE_CHECKING:
@@ -94,17 +96,48 @@ class Ranger(Fighter):
         super().__init__(hp, base_defense, base_power)
         self.fov = 16
 
+    def use_consumable(self, item) -> None:
+        # Do nothing
+        pass
+
+    def on_enemy_hit(self, target) -> None:
+        # Do nothing
+        pass
+
 class Warrior(Fighter):
     def __init__(self, hp: int, base_defense: int, base_power: int):
         super().__init__(hp, base_defense, base_power)
         self.fov = 8
+    
+    def use_consumable(self, item) -> None:
+        # Do nothing
+        pass
+
+    def on_enemy_hit(self, target) -> None:
+        # The warrior has a chance to apply the confusion effect
+        if random.random() < 0.1:
+            target.ai = components.ai.ConfusedEnemy(
+                entity=target, previous_ai=target.ai, turns_remaining=5,
+            )
+            self.engine.message_log.add_message(
+                f"Your strike dazes the {target.name} and it begins to stumble around!",
+                color.status_effect_applied,
+            )
 
 class Mage(Fighter):
     def __init__(self, hp: int, base_defense: int, base_power: int):
         super().__init__(hp, base_defense, base_power)
         self.fov = 10
 
-    # We can use methods like this to apply custom logic at certain event hooks based on the player's class
-    def use_consumable(self) -> None:
-        # Have a % chance of recovering the scroll
+    # Event hooks for actions
+    def use_consumable(self, item) -> None:
+        # The mage has a chance to recover scrolls upon use
+        if random.random() < 0.5:
+            _copy = copy.deepcopy(item)
+            _copy.parent = self.parent.inventory
+            self.parent.inventory.items.append(_copy)
+            self.engine.message_log.add_message(f"You managed to preserve the {item.name}!")
+
+    def on_enemy_hit(self, target) -> None:
+        # Do nothing
         pass
