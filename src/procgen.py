@@ -220,31 +220,46 @@ def generate_cave(
     stepCount = 2
     dungeon = GameMap(engine, map_width, map_height, entities=[player])
 
-    cellMap = []
-    for j in range(map_width):
-        row = []
-        for k in range(map_height):
-            if random.random() < chanceToStartAlive:
-                row.append(True)
-            else:
-                row.append(False)
-        cellMap.append(row)
+    validCave = False
+    while not validCave:
+        cellMap = []
+        for j in range(map_width):
+            row = []
+            for k in range(map_height):
+                if random.random() < chanceToStartAlive:
+                    row.append(True)
+                else:
+                    row.append(False)
+            cellMap.append(row)
 
-    cellMap = doSimulationStep(cellMap, map_width, map_height)
-    cellMap = doSimulationStep(cellMap, map_width, map_height)
-    cellMap = doSimulationStep(cellMap, map_width, map_height)
-    cellMap = doSimulationStep(cellMap, map_width, map_height)
+        cellMap = doSimulationStep(cellMap, map_width, map_height)
+        cellMap = doSimulationStep(cellMap, map_width, map_height)
+        cellMap = doSimulationStep(cellMap, map_width, map_height)
+        cellMap = doSimulationStep(cellMap, map_width, map_height)
+
+        validStart = False
+        while not validStart:
+            rand_x = random.randint(0, map_width-1)
+            rand_y = random.randint(0, map_height-1)
+            if not cellMap[rand_x][rand_y]:
+                validStart = True
+        list = fillCheck([], cellMap, rand_x, rand_y)
+        if len(list) > 800 & len(list) < 1250:
+            validCave = True
     
+    for x in range(map_width):
+        for y in range(map_height):
+            dungeon.tiles[x, y] = tile_types.wall
     
+    for i in list:
+        dungeon.tiles[i[0], i[1]] = tile_types.floor
+
     
-    for x in range(len(cellMap)):
-        for y in range(len(cellMap[x])):
-            if cellMap[x][y]:
-                dungeon.tiles[x, y] = tile_types.wall
-            else:
-                dungeon.tiles[x, y] = tile_types.floor
-    
-    player.place(39, 20, dungeon)
+    player.place(rand_x, rand_y, dungeon)
+
+    end = random.randint(len(list)/2, len(list) - 1)
+    dungeon.tiles[list[end][0], list[end][1]] = tile_types.down_stairs
+    dungeon.downstairs_location = (list[end][0], list[end][1])
 
     return dungeon
 
@@ -292,3 +307,50 @@ def countAliveNeighbors(
                 count = count + 1
     
     return count
+
+def fillCheck(
+    list,
+    map,
+    x: int,
+    y: int,
+):
+    list.append([x, y])
+    if len(list) > 1250:
+        return list
+    if x - 1 >= 0:
+        if not map[x-1][y]:
+            found = False
+            for i in list:
+                if i == [x-1, y]:
+                    found = True
+            if not found:
+                list = fillCheck(list, map, x-1, y)
+    
+    if y - 1 >= 0:
+        if not map[x][y-1]:
+            found = False
+            for i in list:
+                if i == [x, y-1]:
+                    found = True
+            if not found:
+                list = fillCheck(list, map, x, y-1)
+    
+    if x + 1 < 80:
+        if not map[x+1][y]:
+            found = False
+            for i in list:
+                if i == [x+1, y]:
+                    found = True
+            if not found:
+                list = fillCheck(list, map, x+1, y)
+
+    if y + 1 < 43:
+        if not map[x][y+1]:
+            found = False
+            for i in list:
+                if i == [x, y+1]:
+                    found = True
+            if not found:
+                list = fillCheck(list, map, x, y+1)
+    
+    return list
