@@ -50,8 +50,6 @@ def new_game(selected_class) -> Engine:
         "Hello and welcome, adventurer, to yet another dungeon!", color.welcome_text
     )
 
-    player.fighter.give_loadout(engine.player)
-
     return engine
 
 

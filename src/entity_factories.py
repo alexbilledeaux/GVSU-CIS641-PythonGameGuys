@@ -72,9 +72,9 @@ player_ranger = Actor(
     color = (255, 255, 255),
     name = "Player",
     ai_cls = HostileEnemy,
-    equipment=Equipment(),
+    equipment=Equipment(short_bow, leather_armor),
     fighter = Ranger(hp = 25, base_defense = 1, base_power = 2),
-    inventory=Inventory(capacity=26),
+    inventory=Inventory(capacity=26, items=[short_bow, leather_armor, quiver]),
     level=Level(level_up_base=200),
 )
 
@@ -83,9 +83,9 @@ player_warrior = Actor(
     color = (255, 255, 255),
     name = "Player",
     ai_cls = HostileEnemy,
-    equipment=Equipment(),
+    equipment=Equipment(sword, chain_mail),
     fighter = Warrior(hp = 30, base_defense = 1, base_power = 2),
-    inventory=Inventory(capacity=26),
+    inventory=Inventory(capacity=26, items=[sword, chain_mail]),
     level=Level(level_up_base=200),
 )
 
@@ -96,7 +96,7 @@ player_mage = Actor(
     ai_cls = HostileEnemy,
     equipment=Equipment(),
     fighter = Mage(hp = 25, base_defense = 1, base_power = 1),
-    inventory=Inventory(capacity=26),
+    inventory=Inventory(capacity=26, items=[lightning_scroll, fireball_scroll, confusion_scroll]),
     level=Level(level_up_base=200),
 )
 
