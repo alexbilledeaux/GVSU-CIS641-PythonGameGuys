@@ -5,10 +5,11 @@ This document holds all the functional and non-functional requirements for our b
 # Functional Requirements
 
 1.  Game Menu
-    1. The main menu shall display options to both start a new game and to quit.
+    1. The main menu shall display options to start a new game, to load a saved game and to quit.
     2. The game program shall exit when the user selects the quit option.
-    3. The game shall allow the user to select one player class of … when the user selects the “New game” option.
+    3. The game shall allow the user to select one player class from {ranger, warrior, mage} when the user selects the “New game” option.
     4. A new game run shall start when the user selects a player class.
+    5. The game shall allow the user to go back to the main menu from the player class selection menu.
   
 2. Level Generation
    1. The level generator shall add at least 5 + n enemies per level, where n is the depth.
@@ -32,8 +33,13 @@ This document holds all the functional and non-functional requirements for our b
    8. The player shall only be able to equip one set of armor at a time.
    9. The player shall only be able to equip one weapon at a time.
    10. The game shall display a message when the player successfully equips a piece of equipment.
-   10. The game shall display a message when the player successfully unequips a piece of equipment.
+   11. The game shall display a message when the player successfully unequips a piece of equipment.
+   12. The player shall be able to display the contents of his/her inventory.
 
+4. Graphical User Interface
+    1. Once a game has started, the UI shall display an event log which shows the 5 most recent ones.
+    2. The player's HP bar shall remain visible.
+    3. The UI should display the current dungeon level.
 
 # Non-Functional Requirements
 
@@ -45,15 +51,19 @@ This document holds all the functional and non-functional requirements for our b
     5. The player character shall have a maximum number of hitpoints that cannot be exceeded.
     6. The game shall respond to player input within 0.5 seconds.
     7. A saved game file shall not exceed 2mb.
+    8. A saved game shall load in no more than 1 second.
 
 2. Security Requirements
     1. The game shall not store any information about the user.
+    2. The game shall not request any administrator privilege to run.
 
 3. Operational Requirements
     1. The game shall be playable on Windows 10 Home and MacOS Monterey 12.5.1.
     2. The game shall be playable using a keyboard.
     3. The game shall run as a standalone program.
+    4. The game shall be playable on Python 3.7 or higher.
+    5. The game window shall be resizable and its contents shall scale accordingly.
 
 4. Cultural and Political Requirements
-    1. The menu options shall be displayed in English.
+    1. The menu options and messages shall be displayed in English.
     2. The entity class shall be identifiable by alphanumerics rather than color.
