@@ -30,6 +30,12 @@ health_potion = Item(
     name="Health Potion",
     consumable=consumable.HealingConsumable(amount=4),
 )
+antidote = Item(
+    char="?",
+    color=(50, 255, 70),
+    name="Antidote",
+    consumable=consumable.AntidoteConsumable(),
+)
 lightning_scroll = Item(
     char="~",
     color=(255, 255, 0),
@@ -62,7 +68,7 @@ player = Actor(
     name = "Player",
     ai_cls = HostileEnemy,
     equipment=Equipment(),
-    fighter = Fighter(hp = 30, base_defense = 1, base_power = 2),
+    fighter = Fighter(hp = 30, base_defense = 1, base_power = 2, poison_dmg = 0),
     inventory=Inventory(capacity=26),
     level=Level(level_up_base=200),
 )
@@ -73,7 +79,7 @@ player_ranger = Actor(
     name = "Player",
     ai_cls = HostileEnemy,
     equipment=Equipment(short_bow, leather_armor),
-    fighter = Ranger(hp = 25, base_defense = 1, base_power = 2),
+    fighter = Ranger(hp = 25, base_defense = 1, base_power = 2, poison_dmg = 0),
     inventory=Inventory(capacity=26, items=[short_bow, leather_armor, quiver]),
     level=Level(level_up_base=200),
 )
@@ -84,7 +90,7 @@ player_warrior = Actor(
     name = "Player",
     ai_cls = HostileEnemy,
     equipment=Equipment(sword, chain_mail),
-    fighter = Warrior(hp = 30, base_defense = 1, base_power = 2),
+    fighter = Warrior(hp = 30, base_defense = 1, base_power = 2, poison_dmg = 0),
     inventory=Inventory(capacity=26, items=[sword, chain_mail]),
     level=Level(level_up_base=200),
 )
@@ -95,7 +101,7 @@ player_mage = Actor(
     name = "Player",
     ai_cls = HostileEnemy,
     equipment=Equipment(),
-    fighter = Mage(hp = 25, base_defense = 1, base_power = 1),
+    fighter = Mage(hp = 25, base_defense = 1, base_power = 1, poison_dmg = 0),
     inventory=Inventory(capacity=26, items=[lightning_scroll, fireball_scroll, confusion_scroll]),
     level=Level(level_up_base=200),
 )
@@ -107,7 +113,7 @@ orc = Actor(
     name = "Orc",
     ai_cls = HostileEnemy,
     equipment=Equipment(),
-    fighter = Fighter(hp = 10, base_defense = 0, base_power = 3),
+    fighter = Fighter(hp = 10, base_defense = 0, base_power = 3, poison_dmg = 0),
     inventory=Inventory(capacity=0),
     level=Level(xp_given=35),
 )
@@ -118,7 +124,29 @@ troll = Actor(
     name = "Troll",
     ai_cls = HostileEnemy,
     equipment=Equipment(),
-    fighter = Fighter(hp = 16, base_defense = 1, base_power = 4),
+    fighter = Fighter(hp = 16, base_defense = 1, base_power = 4, poison_dmg = 0),
     inventory=Inventory(capacity=0),
     level=Level(xp_given=100),
+)
+
+bat = Actor(
+    char = "w",
+    color = (90, 90, 92),
+    name = "Bat",
+    ai_cls = HostileEnemy,
+    equipment=Equipment(),
+    fighter = Fighter(hp = 8, base_defense = 0, base_power = 0, poison_dmg = 1),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=50),
+)
+
+spider = Actor(
+    char = "M",
+    color = (46, 46, 46),
+    name = "Spider",
+    ai_cls = HostileEnemy,
+    equipment=Equipment(),
+    fighter = Fighter(hp = 14, base_defense = 0, base_power = 0, poison_dmg = 2),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=35),
 )

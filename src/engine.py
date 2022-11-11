@@ -51,6 +51,7 @@ class Engine:
             console = console,
             current_value = self.player.fighter.hp,
             maximum_value = self.player.fighter.max_hp,
+            poison_value = self.player.fighter.current_poison,
             total_width = 20,
         )
 

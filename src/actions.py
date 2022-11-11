@@ -51,6 +51,7 @@ class PickupAction(Action):
                 inventory.items.append(item)
 
                 self.engine.message_log.add_message(f"You picked up the {item.name}!")
+                self.entity.fighter.take_poison_damage()
                 return
 
         raise exceptions.Impossible("There is nothing here to pick up.")
@@ -77,6 +78,7 @@ class ItemAction(Action):
             self.entity.fighter.use_consumable(self.item)
             # Activate consumable effect
             self.item.consumable.activate(self)
+            self.entity.fighter.take_poison_damage()
 
 
 class DropItem(ItemAction):
@@ -85,6 +87,7 @@ class DropItem(ItemAction):
             self.entity.equipment.toggle_equip(self.item)
             
         self.entity.inventory.drop(self.item)
+        self.entity.fighter.take_poison_damage()
 
 class EquipAction(Action):
     def __init__(self, entity: Actor, item: Item):
@@ -94,10 +97,11 @@ class EquipAction(Action):
 
     def perform(self) -> None:
         self.entity.equipment.toggle_equip(self.item)
+        self.entity.fighter.take_poison_damage()
 
 class WaitAction(Action):
     def perform(self) -> None:
-        pass
+        self.entity.fighter.take_poison_damage()
 
 class TakeStairsAction(Action):
     def perform(self) -> None:
@@ -109,6 +113,7 @@ class TakeStairsAction(Action):
             self.engine.message_log.add_message(
                 "You descend the staircase.", color.descend
             )
+            self.entity.fighter.take_poison_damage()
         else:
             raise exceptions.Impossible("There are no stairs here.")
 
@@ -145,6 +150,7 @@ class MeleeAction(ActionWithDirection):
             raise exceptions.Impossible("Nothing to attack.")
 
         damage = self.entity.fighter.power - target.fighter.defense
+        poison_damage = self.entity.fighter.poison_dmg
 
         # Event hook for class abilities
         if self.entity is self.engine.player:
@@ -162,10 +168,18 @@ class MeleeAction(ActionWithDirection):
                 f"{attack_desc} for {damage} hit points.", attack_color
             )
             target.fighter.hp -= damage
+        elif poison_damage > 0:
+            self.engine.message_log.add_message(
+                f"{attack_desc} and poisons them for {poison_damage} points.", attack_color
+            )
+            target.fighter.current_poison += poison_damage
         else:
             self.engine.message_log.add_message(
                 f"{attack_desc} but does no damage.", attack_color
             )
+        self.entity.fighter.take_poison_damage()
+        
+        
 
 
 class MovementAction(ActionWithDirection):
@@ -183,6 +197,7 @@ class MovementAction(ActionWithDirection):
             raise exceptions.Impossible("That way is blocked.")
 
         self.entity.move(self.dx, self.dy)
+        self.entity.fighter.take_poison_damage()
 
 
 class BumpAction(ActionWithDirection):

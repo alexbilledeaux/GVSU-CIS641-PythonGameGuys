@@ -21,15 +21,37 @@ max_items_by_floor = [
     (4, 2),
 ]
 
+cave_min_items_by_floor = [
+    (2, 4),
+    (4, 8),
+]
+
+cave_max_items_by_floor = [
+    (2, 10),
+    (4, 20),
+]
+
 max_monsters_by_floor = [
     (1, 2),
     (4, 3),
     (6, 5),
 ]
 
+cave_min_monsters_by_floor = [
+    (2, 5),
+    (4, 10),
+    (6, 15),
+]
+
+cave_max_monsters_by_floor = [
+    (2, 15),
+    (4, 20),
+    (6, 30),
+]
+
 item_chances: Dict[int, List[Tuple[Entity, int]]] = {
     0: [(entity_factories.health_potion, 35)],
-    2: [(entity_factories.confusion_scroll, 10)],
+    2: [(entity_factories.confusion_scroll, 10), (entity_factories.antidote, 20)],
     4: [(entity_factories.lightning_scroll, 25), (entity_factories.sword, 5)],
     6: [(entity_factories.fireball_scroll, 25), (entity_factories.chain_mail, 15)],
 }
@@ -41,12 +63,34 @@ enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
     7: [(entity_factories.troll, 60)],
 }
 
+cave_enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
+    0:[(entity_factories.orc, 60)],
+    2:[(entity_factories.bat, 30)],
+    4:[(entity_factories.bat, 60), (entity_factories.spider, 10)],
+    6:[(entity_factories.spider, 25)],
+    8:[(entity_factories.spider, 50)]
+
+}
+
 def get_max_value_for_floor(
     max_value_by_floor: List[Tuple[int, int]], floor: int
 ) -> int:
     current_value = 0
 
     for floor_minimum, value in max_value_by_floor:
+        if floor_minimum > floor:
+            break
+        else:
+            current_value = value
+
+    return current_value
+
+def get_min_value_for_floor(
+    min_value_by_floor: List[Tuple[int, int]], floor: int
+) -> int:
+    current_value = 0
+
+    for floor_minimum, value in min_value_by_floor:
         if floor_minimum > floor:
             break
         else:
@@ -127,6 +171,31 @@ def place_entities(room: RectangularRoom, dungeon: GameMap, floor_number: int,) 
     for entity in monsters + items:
         x = random.randint(room.x1 + 1, room.x2 - 1)
         y = random.randint(room.y1 + 1, room.y2 - 1)
+
+        if not any(entity.x == x and entity.y == y for entity in dungeon.entities):
+            entity.spawn(dungeon, x, y)
+
+def place_cave_entities(list, map, dungeon: GameMap, floor_number: int,) -> None:
+    number_of_monsters = random.randint(
+        get_min_value_for_floor(cave_min_monsters_by_floor, floor_number),
+        get_max_value_for_floor(cave_max_monsters_by_floor, floor_number)
+    )
+    number_of_items = random.randint(
+        get_min_value_for_floor(cave_min_items_by_floor, floor_number),
+        get_max_value_for_floor(cave_max_items_by_floor, floor_number)
+    )
+
+    monsters: List[Entity] = get_entities_at_random(
+        cave_enemy_chances, number_of_monsters, floor_number
+    )
+    items: List[Entity] = get_entities_at_random(
+        item_chances, number_of_items, floor_number
+    )
+
+    for entity in monsters + items:
+        space = random.randint(1, len(list)-1)
+        x = list[space][0]
+        y = list[space][1]
 
         if not any(entity.x == x and entity.y == y for entity in dungeon.entities):
             entity.spawn(dungeon, x, y)
@@ -263,6 +332,8 @@ def generate_cave(
     end = random.randint(startInt, len(list) - 1)
     dungeon.tiles[list[end][0], list[end][1]] = tile_types.down_stairs
     dungeon.downstairs_location = (list[end][0], list[end][1])
+
+    place_cave_entities(list, cellMap, dungeon, engine.game_world.current_floor)
 
     return dungeon
 

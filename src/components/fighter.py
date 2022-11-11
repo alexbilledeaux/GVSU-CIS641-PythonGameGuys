@@ -15,12 +15,14 @@ if TYPE_CHECKING:
 class Fighter(BaseComponent):
     parent: Actor
 
-    def __init__(self, hp: int, base_defense: int, base_power: int):
+    def __init__(self, hp: int, base_defense: int, base_power: int, poison_dmg: int):
         self.max_hp = hp
         self._hp = hp
         self.base_defense = base_defense
         self.base_power = base_power
         self.fov = 8
+        self.poison_dmg = poison_dmg
+        self.current_poison = 0
 
     @property
     def hp(self) -> int:
@@ -90,10 +92,19 @@ class Fighter(BaseComponent):
 
     def take_damage(self, amount: int) -> None:
         self.hp -= amount
+    
+    def heal_poison(self) -> None:
+        self.current_poison = 0
+
+    def take_poison_damage(self) -> None:
+        if self.current_poison > 4:
+            self.hp -= self.current_poison
+            self.engine.message_log.add_message(f"Your poison build-up was too much! You take {self.current_poison} damage as your body purges toxins!")
+            self.heal_poison()
 
 class Ranger(Fighter):
-    def __init__(self, hp: int, base_defense: int, base_power: int):
-        super().__init__(hp, base_defense, base_power)
+    def __init__(self, hp: int, base_defense: int, base_power: int, poison_dmg: int):
+        super().__init__(hp, base_defense, base_power, poison_dmg)
         self.fov = 16
 
     def use_consumable(self, item) -> None:
@@ -105,8 +116,8 @@ class Ranger(Fighter):
         pass
 
 class Warrior(Fighter):
-    def __init__(self, hp: int, base_defense: int, base_power: int):
-        super().__init__(hp, base_defense, base_power)
+    def __init__(self, hp: int, base_defense: int, base_power: int, poison_dmg: int):
+        super().__init__(hp, base_defense, base_power, poison_dmg)
         self.fov = 8
     
     def use_consumable(self, item) -> None:
@@ -125,8 +136,8 @@ class Warrior(Fighter):
             )
 
 class Mage(Fighter):
-    def __init__(self, hp: int, base_defense: int, base_power: int):
-        super().__init__(hp, base_defense, base_power)
+    def __init__(self, hp: int, base_defense: int, base_power: int, poison_dmg: int):
+        super().__init__(hp, base_defense, base_power, poison_dmg)
         self.fov = 10
 
     # Event hooks for actions

@@ -127,6 +127,24 @@ class HealingConsumable(Consumable):
         else:
             raise Impossible(f"Your health is already full.")
 
+class AntidoteConsumable(Consumable):
+    def __init__(self):
+        pass
+
+    def activate(self, action: actions.ItemAction) -> None:
+        consumer = action.entity
+        current_poison = consumer.fighter.current_poison
+
+        if current_poison > 0:
+            self.engine.message_log.add_message(
+                f"You consume the {self.parent.name}, and are cured of poison!",
+                color.health_recovered,
+            )
+            consumer.fighter.heal_poison
+            self.consume()
+        else:
+            raise Impossible(f"Your health is already full.")
+
 
 class LightningDamageConsumable(Consumable):
     def __init__(self, damage: int, maximum_range: int) -> None:

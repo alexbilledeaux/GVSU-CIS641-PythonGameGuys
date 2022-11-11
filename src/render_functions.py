@@ -21,9 +21,10 @@ def get_names_at_location(x: int, y: int, game_map: GameMap) -> str:
     return names.capitalize()
 
 def render_bar(
-    console: Console, current_value: int, maximum_value: int, total_width: int
+    console: Console, current_value: int, maximum_value: int, poison_value: int, total_width: int
 ) -> None:
     bar_width = int(float(current_value) / maximum_value * total_width)
+    bar_poison_width = int(float(poison_value) / maximum_value * total_width)
 
     console.draw_rect(x = 0, y = 45, width = total_width, height = 1, ch = 1, bg = color.bar_empty)
 
@@ -31,6 +32,16 @@ def render_bar(
         console.draw_rect(
             x = 0, y = 45, width = bar_width, height = 1, ch = 1, bg = color.bar_filled
         )
+    
+    if bar_poison_width > 0:
+        if bar_poison_width > bar_width:
+            console.draw_rect(
+                x = 0, y = 45, width = bar_width, height = 1, ch = 1, bg = color.bar_poison
+            )
+        else:
+            console.draw_rect(
+                x = bar_width - bar_poison_width, y = 45, width = bar_poison_width, height = 1, ch = 1, bg = color.bar_poison
+            )
 
     console.print(
         x = 1, y = 45, string = f"HP: {current_value}/{maximum_value}", fg = color.bar_text
