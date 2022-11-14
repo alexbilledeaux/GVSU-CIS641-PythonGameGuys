@@ -72,5 +72,11 @@ class Level(BaseComponent):
         self.engine.message_log.add_message("Your movements are getting swifter!")
 
         self.increase_level()
+    
+    def increase_class_attributes(self) -> None:
+        # TODO: Increase class attributes here!
 
+        self.engine.message_log.add_message("You increased your class attributes")
+
+        self.increase_level()
     
