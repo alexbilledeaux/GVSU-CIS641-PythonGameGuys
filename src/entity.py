@@ -159,3 +159,8 @@ class Item(Entity):
 
         if self.equippable:
             self.equippable.parent = self
+
+    def take_damage(self, amount: int) -> None:
+        # Only makes sense for equippable items
+        if self.equippable:
+            self.equippable.take_damage(amount)

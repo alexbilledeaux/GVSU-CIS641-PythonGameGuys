@@ -91,7 +91,14 @@ class Fighter(BaseComponent):
         return amount_recovered
 
     def take_damage(self, amount: int) -> None:
-        self.hp -= amount
+        if self.parent.equipment.armor:
+            armor = self.parent.equipment.armor
+            armor.take_damage(amount)
+            if armor.equippable.durability <= 0:
+                self.parent.equipment.destroy_message(armor.name)
+                self.parent.equipment.armor = None
+        else:
+            self.hp -= amount    
     
     def heal_poison(self) -> None:
         self.current_poison = 0

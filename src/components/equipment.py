@@ -52,6 +52,11 @@ class Equipment(BaseComponent):
         self.parent.gamemap.engine.message_log.add_message(
             f"You equip the {item_name}."
         )
+    
+    def destroy_message(self, item_name: str) -> None:
+        self.parent.gamemap.engine.message_log.add_message(
+            f"Your {item_name} was destroyed."
+        )
 
     def equip_to_slot(self, slot: str, item: Item, add_message: bool) -> None:
         current_item = getattr(self, slot)
@@ -85,3 +90,7 @@ class Equipment(BaseComponent):
             self.unequip_from_slot(slot, add_message)
         else:
             self.equip_to_slot(slot, equippable_item, add_message)
+    
+    def take_damage(self, amount: int):
+        if self.armor:
+            self.armor.take_damage(amount)
