@@ -74,10 +74,11 @@ class ItemAction(Action):
     def perform(self) -> None:
         """Invoke the items ability, this action will be given to provide context."""
         if self.item.consumable:
-            # Event hook for class abilities
-            self.entity.fighter.use_consumable(self.item)
             # Activate consumable effect
-            self.item.consumable.activate(self)
+            consumable_target = self.item.consumable.activate(self)
+            if consumable_target:
+                # Event hook for class abilities
+                self.entity.fighter.use_consumable(self.item, consumable_target)
             self.entity.fighter.take_poison_damage()
 
 

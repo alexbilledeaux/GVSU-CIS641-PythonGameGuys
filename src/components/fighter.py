@@ -75,6 +75,11 @@ class Fighter(BaseComponent):
 
         self.engine.player.level.add_xp(self.parent.level.xp_given)
 
+        # Enemies drop inventory when killed
+        for item in self.parent.inventory.items:
+            self.parent.inventory.drop(item)
+            pass
+
     def heal(self, amount: int) -> int:
         if self.hp == self.max_hp:
             return 0
@@ -114,9 +119,19 @@ class Ranger(Fighter):
         super().__init__(hp, base_defense, base_power, poison_dmg)
         self.fov = 16
 
-    def use_consumable(self, item) -> None:
-        # Do nothing
-        pass
+    def use_consumable(self, item, target) -> None:
+        # The ranger has a chance to spawn arrows on targets struck by arrows
+        if item.char == "-":
+            if random.random() < 0.8 and target.is_alive and len(target.inventory.items) < target.inventory.capacity:
+                _copy = copy.deepcopy(item)
+                _copy.parent = target.inventory
+                target.inventory.items.append(_copy)
+                self.engine.message_log.add_message(f"The {item.name} looks recoverable!")
+            elif random.random() < 0.8 and not target.is_alive and len(target.inventory.items) < target.inventory.capacity:
+                _copy = copy.deepcopy(item)
+                _copy.spawn(self.gamemap, target.x, target.y)
+            else:
+                self.engine.message_log.add_message(f"The {item.name} broke as it hit the {target.name}.")
 
     def on_enemy_hit(self, target) -> None:
         # Do nothing
@@ -127,7 +142,7 @@ class Warrior(Fighter):
         super().__init__(hp, base_defense, base_power, poison_dmg)
         self.fov = 8
     
-    def use_consumable(self, item) -> None:
+    def use_consumable(self, item, target) -> None:
         # Do nothing
         pass
 
@@ -148,13 +163,14 @@ class Mage(Fighter):
         self.fov = 10
 
     # Event hooks for actions
-    def use_consumable(self, item) -> None:
+    def use_consumable(self, item, target) -> None:
         # The mage has a chance to recover scrolls upon use
-        if random.random() < 0.5:
-            _copy = copy.deepcopy(item)
-            _copy.parent = self.parent.inventory
-            self.parent.inventory.items.append(_copy)
-            self.engine.message_log.add_message(f"You managed to preserve the {item.name}!")
+        if item.char == "~":
+            if random.random() < 0.8:
+                _copy = copy.deepcopy(item)
+                _copy.parent = self.parent.inventory
+                self.parent.inventory.items.append(_copy)
+                self.engine.message_log.add_message(f"You managed to preserve the {item.name}!")
 
     def on_enemy_hit(self, target) -> None:
         # Do nothing

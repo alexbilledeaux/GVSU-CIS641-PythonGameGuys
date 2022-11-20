@@ -18,11 +18,11 @@ fireball_scroll = Item(
     name="Fireball Scroll",
     consumable=consumable.FireballDamageConsumable(damage=12, radius=3),
 )
-quiver = Item(
-    char="U",
+arrow = Item(
+    char="-",
     color=(51, 0, 0),
-    name="Quiver of Arrows",
-    consumable=consumable.Quiver(),
+    name="Arrow",
+    consumable=consumable.Arrow(),
 )
 health_potion = Item(
     char="!",
@@ -80,7 +80,7 @@ player_ranger = Actor(
     ai_cls = HostileEnemy,
     equipment=Equipment(short_bow, leather_armor),
     fighter = Ranger(hp = 25, base_defense = 1, base_power = 2, poison_dmg = 0),
-    inventory=Inventory(capacity=26, items=[short_bow, leather_armor, quiver]),
+    inventory=Inventory(capacity=26, items=[short_bow, leather_armor, arrow, arrow, arrow, arrow]),
     level=Level(level_up_base=200),
 )
 
@@ -114,7 +114,7 @@ orc = Actor(
     ai_cls = HostileEnemy,
     equipment=Equipment(),
     fighter = Fighter(hp = 10, base_defense = 0, base_power = 3, poison_dmg = 0),
-    inventory=Inventory(capacity=0),
+    inventory=Inventory(capacity=8),
     level=Level(xp_given=35),
 )
 
@@ -125,7 +125,7 @@ troll = Actor(
     ai_cls = HostileEnemy,
     equipment=Equipment(),
     fighter = Fighter(hp = 16, base_defense = 1, base_power = 4, poison_dmg = 0),
-    inventory=Inventory(capacity=0),
+    inventory=Inventory(capacity=10),
     level=Level(xp_given=100),
 )
 
@@ -136,7 +136,7 @@ bat = Actor(
     ai_cls = HostileEnemy,
     equipment=Equipment(),
     fighter = Fighter(hp = 8, base_defense = 0, base_power = 0, poison_dmg = 1),
-    inventory=Inventory(capacity=0),
+    inventory=Inventory(capacity=2),
     level=Level(xp_given=50),
 )
 
@@ -147,6 +147,6 @@ spider = Actor(
     ai_cls = HostileEnemy,
     equipment=Equipment(),
     fighter = Fighter(hp = 14, base_defense = 0, base_power = 0, poison_dmg = 2),
-    inventory=Inventory(capacity=0),
+    inventory=Inventory(capacity=2),
     level=Level(xp_given=35),
 )

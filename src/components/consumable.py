@@ -26,7 +26,7 @@ class Consumable(BaseComponent):
         """Try to return the action for this item."""
         return actions.ItemAction(consumer, self.parent)
 
-    def activate(self, action: actions.ItemAction) -> None:
+    def activate(self, action: actions.ItemAction) -> Actor:
         """Invoke this items ability.
 
         `action` is the context for this activation.
@@ -54,7 +54,7 @@ class ConfusionConsumable(Consumable):
             callback=lambda xy: actions.ItemAction(consumer, self.parent, xy),
         )
     
-    def activate(self, action: actions.ItemAction) -> None:
+    def activate(self, action: actions.ItemAction) -> Actor:
         consumer = action.entity
         target = action.target_actor
 
@@ -73,6 +73,7 @@ class ConfusionConsumable(Consumable):
             entity=target, previous_ai=target.ai, turns_remaining=self.number_of_turns,
         )
         self.consume()
+        return target
 
 
 class FireballDamageConsumable(Consumable):
@@ -90,7 +91,7 @@ class FireballDamageConsumable(Consumable):
             callback=lambda xy: actions.ItemAction(consumer, self.parent, xy),
         )
     
-    def activate(self, action: actions.ItemAction) -> None:
+    def activate(self, action: actions.ItemAction) -> Actor:
         target_xy = action.target_xy
 
         if not self.engine.game_map.visible[target_xy]:
@@ -108,13 +109,14 @@ class FireballDamageConsumable(Consumable):
         if not targets_hit:
             raise Impossible("There are no targets in the radius.")
         self.consume()
+        return action.entity
 
 
 class HealingConsumable(Consumable):
     def __init__(self, amount: int):
         self.amount = amount
 
-    def activate(self, action: actions.ItemAction) -> None:
+    def activate(self, action: actions.ItemAction) -> Actor:
         consumer = action.entity
         amount_recovered = consumer.fighter.heal(self.amount)
 
@@ -124,6 +126,7 @@ class HealingConsumable(Consumable):
                 color.health_recovered,
             )
             self.consume()
+            return action.entity
         else:
             raise Impossible(f"Your health is already full.")
 
@@ -131,7 +134,7 @@ class AntidoteConsumable(Consumable):
     def __init__(self):
         pass
 
-    def activate(self, action: actions.ItemAction) -> None:
+    def activate(self, action: actions.ItemAction) -> Actor:
         consumer = action.entity
         current_poison = consumer.fighter.current_poison
 
@@ -142,6 +145,7 @@ class AntidoteConsumable(Consumable):
             )
             consumer.fighter.heal_poison
             self.consume()
+            return action.entity
         else:
             raise Impossible(f"Your health is already full.")
 
@@ -151,7 +155,7 @@ class LightningDamageConsumable(Consumable):
         self.damage = damage
         self.maximum_range = maximum_range
     
-    def activate(self, action: actions.ItemAction) -> None:
+    def activate(self, action: actions.ItemAction) -> Actor:
         consumer = action.entity
         target = None
         closest_distance = self.maximum_range + 1.0
@@ -170,10 +174,11 @@ class LightningDamageConsumable(Consumable):
             )
             target.fighter.take_damage(self.damage)
             self.consume()
+            return target
         else:
             raise Impossible("No enemy is close enough to strike.")
 
-class Quiver(Consumable):
+class Arrow(Consumable):
     def __init__(self) -> None:
         self.damage = 0
     
@@ -186,7 +191,7 @@ class Quiver(Consumable):
             callback=lambda xy: actions.ItemAction(consumer, self.parent, xy),
         )
     
-    def activate(self, action: actions.ItemAction) -> None:
+    def activate(self, action: actions.ItemAction) -> Actor:
         consumer = action.entity
         self.damage = consumer.fighter.power + 1
         target = action.target_actor
@@ -207,3 +212,5 @@ class Quiver(Consumable):
                 f"The {target.name} is hit by your arrow, taking {self.damage} damage!"
             )
         target.fighter.take_damage(self.damage)
+        self.consume()
+        return target
