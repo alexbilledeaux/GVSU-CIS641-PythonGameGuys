@@ -52,10 +52,14 @@ This document holds all the functional and non-functional requirements for our b
     6. The game shall respond to player input within 0.5 seconds.
     7. A saved game file shall not exceed 2mb.
     8. A saved game shall load in no more than 1 second.
+    9. The game executable shall not be larger than 300kb.
 
 2. Security Requirements
     1. The game shall not store any information about the user.
     2. The game shall not request any administrator privilege to run.
+    3. The game executable shall not modify any files except for savegame.sav.
+    4. The game executable shall not modify any files outside of the folder where it is located.
+    5. Users shall not be required to set up an account or enter user credentials to download the game executable.
 
 3. Operational Requirements
     1. The game shall be playable on Windows 10 Home and MacOS Monterey 12.5.1.
@@ -63,7 +67,9 @@ This document holds all the functional and non-functional requirements for our b
     3. The game shall run as a standalone program.
     4. The game shall be playable on Python 3.7 or higher.
     5. The game window shall be resizable and its contents shall scale accordingly.
+    6. The game shall be packaged as a standalone executable.
 
 4. Cultural and Political Requirements
     1. The menu options and messages shall be displayed in English.
     2. The entity class shall be identifiable by alphanumerics rather than color.
+    3. The game source code shall be free to modify and redistribute according under the MIT License.
