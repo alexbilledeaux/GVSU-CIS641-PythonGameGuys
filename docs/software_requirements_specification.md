@@ -53,6 +53,7 @@ This document holds all the functional and non-functional requirements for our b
     7. A saved game file shall not exceed 2mb.
     8. A saved game shall load in no more than 1 second.
     9. The game executable shall not be larger than 300kb.
+    10. The game shall not use more than 100 MB of RAM when it runs.
 
 2. Security Requirements
     1. The game shall not store any information about the user.
@@ -73,3 +74,5 @@ This document holds all the functional and non-functional requirements for our b
     1. The menu options and messages shall be displayed in English.
     2. The entity class shall be identifiable by alphanumerics rather than color.
     3. The game source code shall be free to modify and redistribute according under the MIT License.
+    4. The game shall be playable by users who are at least 12 years old.
+    5. The game shall not include any political/religious reference either in text or visually.
