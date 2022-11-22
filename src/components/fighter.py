@@ -76,9 +76,9 @@ class Fighter(BaseComponent):
         self.engine.player.level.add_xp(self.parent.level.xp_given)
 
         # Enemies drop inventory when killed
-        for item in self.parent.inventory.items:
+        items = [i for i in self.parent.inventory.items]
+        for item in items:
             self.parent.inventory.drop(item)
-            pass
 
     def heal(self, amount: int) -> int:
         if self.hp == self.max_hp:
