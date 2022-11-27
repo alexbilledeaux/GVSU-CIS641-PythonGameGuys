@@ -18,11 +18,11 @@ class Inventory(BaseComponent):
             item.parent = self
             self.items.append(item)
 
-    def drop(self, item: Item) -> None:
+    def drop(self, item: Item, logs_message: bool = True) -> None:
         """
         Removes an item from the inventory and restores it to the game map, at the owner's current location.
         """
-        if self.parent == self.engine.player:
+        if self.parent == self.engine.player and logs_message:
             self.engine.message_log.add_message(f"You dropped the {item.name}.")
 
         item.spawn(self.gamemap, self.parent.x, self.parent.y)
