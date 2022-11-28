@@ -129,6 +129,27 @@ class HealingConsumable(Consumable):
             return action.entity
         else:
             raise Impossible(f"Your health is already full.")
+        
+class ArmorRepairConsumable(Consumable):
+    def __init__(self, amount: int):
+        self.amount = amount
+
+    def activate(self, action: actions.ItemAction) -> Actor:
+        consumer = action.entity
+        
+        if consumer.equipment.armor == None:
+            raise Impossible(f"You aren't wearing armor.")
+
+        if consumer.equipment.armor.equippable.max_durability == consumer.equipment.armor.equippable.durability:
+            raise Impossible(f"Your armor is undamaged.")
+        
+        consumer.equipment.armor.equippable.repair_damage(self.amount)
+        self.engine.message_log.add_message(
+            f"You repair your {consumer.equipment.armor.name}!",
+            color.health_recovered,
+        )
+        self.consume()
+        return action.entity
 
 class AntidoteConsumable(Consumable):
     def __init__(self):
@@ -147,7 +168,7 @@ class AntidoteConsumable(Consumable):
             self.consume()
             return action.entity
         else:
-            raise Impossible(f"Your health is already full.")
+            raise Impossible(f"You aren't poisoned.")
 
 
 class LightningDamageConsumable(Consumable):

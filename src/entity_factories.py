@@ -31,10 +31,16 @@ health_potion = Item(
     consumable=consumable.HealingConsumable(amount=4),
 )
 antidote = Item(
-    char="?",
+    char="!",
     color=(50, 255, 70),
     name="Antidote",
     consumable=consumable.AntidoteConsumable(),
+)
+armor_repair_kit = Item(
+    char="!",
+    color=(125, 123, 122),
+    name="Armor Repair Kit",
+    consumable=consumable.ArmorRepairConsumable(amount=15),
 )
 lightning_scroll = Item(
     char="~",
@@ -80,7 +86,7 @@ player_ranger = Actor(
     ai_cls = HostileEnemy,
     equipment=Equipment(short_bow, leather_armor),
     fighter = Ranger(hp = 25, base_defense = 1, base_power = 2, poison_dmg = 0),
-    inventory=Inventory(capacity=26, items=[short_bow, leather_armor, arrow, arrow, arrow, arrow]),
+    inventory=Inventory(capacity=26, items=[short_bow, leather_armor, arrow, arrow, arrow, arrow, armor_repair_kit]),
     level=Level(level_up_base=200),
 )
 
