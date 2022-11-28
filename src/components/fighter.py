@@ -102,7 +102,7 @@ class Fighter(BaseComponent):
             if armor.equippable.durability <= 0:
                 self.parent.equipment.destroy_message(armor.name)
                 self.parent.equipment.armor = None
-                self.parent.inventory.drop(armor, logs_message=False)
+                self.parent.inventory.destroy(armor, logs_message=False)
         else:
             self.hp -= amount    
     

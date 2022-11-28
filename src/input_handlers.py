@@ -328,9 +328,9 @@ class InventoryEventHandler(AskUserEventHandler):
         they are.
         """
         super().on_render(console)
-        number_of_items_in_inventory = len(self.engine.player.inventory.items)
 
-        height = number_of_items_in_inventory + 2
+        number_of_unique_items = len(self.engine.player.inventory.get_unique_items())
+        height = number_of_unique_items + 2
 
         if height <= 3:
             height = 3
@@ -355,12 +355,15 @@ class InventoryEventHandler(AskUserEventHandler):
             bg=(0, 0, 0),
         )
 
-        if number_of_items_in_inventory > 0:
-            for i, item in enumerate(self.engine.player.inventory.items):
+        if number_of_unique_items > 0:
+            for i, item in enumerate(self.engine.player.inventory.get_unique_items()):
                 item_key = chr(ord("a") + i)
                 is_equipped = self.engine.player.equipment.item_is_equipped(item)
-
                 item_string = f"({item_key}) {item.name}"
+
+                item_count = self.engine.player.inventory.item_count(item)
+                if item.consumable and item_count > 1:
+                    item_string = f"{item_string} ({item_count})"
 
                 if is_equipped:
                     item_string = f"{item_string} (E)"
@@ -376,7 +379,7 @@ class InventoryEventHandler(AskUserEventHandler):
 
         if 0 <= index <= 26:
             try:
-                selected_item = player.inventory.items[index]
+                selected_item = player.inventory.get_unique_items()[index]
             except IndexError:
                 self.engine.message_log.add_message("Invalid entry.", color.invalid)
                 return None
