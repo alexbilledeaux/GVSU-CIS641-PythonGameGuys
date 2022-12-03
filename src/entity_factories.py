@@ -55,6 +55,8 @@ dagger = Item(
 
 sword = Item(char="/", color=(0, 191, 255), name="Sword", equippable=equippable.Sword())
 
+shortsword = Item(char="/", color=(0, 191, 255), name="Short Sword", equippable=equippable.Shortsword())
+
 short_bow = Item(char="D", color=(51, 0, 0), name="Short Bow", equippable=equippable.ShortBow())
 
 leather_armor = Item(
@@ -86,7 +88,7 @@ player_ranger = Actor(
     ai_cls = HostileEnemy,
     equipment=Equipment(short_bow, leather_armor),
     fighter = Ranger(hp = 25, base_defense = 1, base_power = 2, poison_dmg = 0),
-    inventory=Inventory(capacity=26, items=[short_bow, leather_armor, arrow, arrow, arrow, arrow, armor_repair_kit]),
+    inventory=Inventory(capacity=26, items=[short_bow, leather_armor, arrow, arrow, arrow, arrow, arrow, arrow, arrow, arrow, arrow, arrow]),
     level=Level(level_up_base=200),
 )
 
@@ -95,9 +97,9 @@ player_warrior = Actor(
     color = (255, 255, 255),
     name = "Player",
     ai_cls = HostileEnemy,
-    equipment=Equipment(sword, chain_mail),
+    equipment=Equipment(dagger, chain_mail),
     fighter = Warrior(hp = 30, base_defense = 1, base_power = 2, poison_dmg = 0),
-    inventory=Inventory(capacity=26, items=[sword, chain_mail]),
+    inventory=Inventory(capacity=26, items=[dagger, chain_mail]),
     level=Level(level_up_base=200),
 )
 
@@ -108,7 +110,7 @@ player_mage = Actor(
     ai_cls = HostileEnemy,
     equipment=Equipment(),
     fighter = Mage(hp = 25, base_defense = 1, base_power = 1, poison_dmg = 0),
-    inventory=Inventory(capacity=26, items=[lightning_scroll, fireball_scroll, confusion_scroll]),
+    inventory=Inventory(capacity=26, items=[lightning_scroll, lightning_scroll, fireball_scroll, fireball_scroll, confusion_scroll, confusion_scroll]),
     level=Level(level_up_base=200),
 )
 
