@@ -176,8 +176,9 @@ class MeleeAction(ActionWithDirection):
             target.fighter.current_poison += poison_damage
         else:
             self.engine.message_log.add_message(
-                f"{attack_desc} but does no damage.", attack_color
+                f"{attack_desc} for minimum damage.", attack_color
             )
+            target.fighter.take_damage(1)
         self.entity.fighter.take_poison_damage()
         
         

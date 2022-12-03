@@ -23,6 +23,7 @@ class Fighter(BaseComponent):
         self.fov = 8
         self.poison_dmg = poison_dmg
         self.current_poison = 0
+        self.class_ability_rank = 0
 
     @property
     def hp(self) -> int:
@@ -119,16 +120,18 @@ class Ranger(Fighter):
     def __init__(self, hp: int, base_defense: int, base_power: int, poison_dmg: int):
         super().__init__(hp, base_defense, base_power, poison_dmg)
         self.fov = 16
+        self.abilityIncrement = 5
+        self.abilityDescription = "recover arrows"
 
     def use_consumable(self, item, target) -> None:
         # The ranger has a chance to spawn arrows on targets struck by arrows
         if item.char == "-":
-            if random.random() < 0.8 and target.is_alive and len(target.inventory.items) < target.inventory.capacity:
+            if random.random() < (0.5 + ((self.abilityIncrement/100) * self.class_ability_rank)) and target.is_alive and len(target.inventory.items) < target.inventory.capacity:
                 _copy = copy.deepcopy(item)
                 _copy.parent = target.inventory
                 target.inventory.items.append(_copy)
                 self.engine.message_log.add_message(f"The {item.name} looks recoverable!")
-            elif random.random() < 0.8 and not target.is_alive and len(target.inventory.items) < target.inventory.capacity:
+            elif random.random() < (0.5 + ((self.abilityIncrement/100) * self.class_ability_rank)) and not target.is_alive and len(target.inventory.items) < target.inventory.capacity:
                 _copy = copy.deepcopy(item)
                 _copy.spawn(self.gamemap, target.x, target.y)
             else:
@@ -142,6 +145,8 @@ class Warrior(Fighter):
     def __init__(self, hp: int, base_defense: int, base_power: int, poison_dmg: int):
         super().__init__(hp, base_defense, base_power, poison_dmg)
         self.fov = 8
+        self.abilityIncrement = 1
+        self.abilityDescription = "stun enemies"
     
     def use_consumable(self, item, target) -> None:
         # Do nothing
@@ -149,7 +154,7 @@ class Warrior(Fighter):
 
     def on_enemy_hit(self, target) -> None:
         # The warrior has a chance to apply the confusion effect
-        if random.random() < 0.1:
+        if random.random() < (0.05 + ((self.abilityIncrement/100) * self.class_ability_rank)):
             target.ai = components.ai.ConfusedEnemy(
                 entity=target, previous_ai=target.ai, turns_remaining=5,
             )
@@ -162,12 +167,14 @@ class Mage(Fighter):
     def __init__(self, hp: int, base_defense: int, base_power: int, poison_dmg: int):
         super().__init__(hp, base_defense, base_power, poison_dmg)
         self.fov = 10
+        self.abilityIncrement = 5
+        self.abilityDescription = "preserve scrolls"
 
     # Event hooks for actions
     def use_consumable(self, item, target) -> None:
         # The mage has a chance to recover scrolls upon use
         if item.char == "~":
-            if random.random() < 0.8:
+            if random.random() < (0.5 + ((self.abilityIncrement/100) * self.class_ability_rank)):
                 _copy = copy.deepcopy(item)
                 _copy.parent = self.parent.inventory
                 self.parent.inventory.items.append(_copy)

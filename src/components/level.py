@@ -73,10 +73,10 @@ class Level(BaseComponent):
 
         self.increase_level()
     
-    def increase_class_attributes(self) -> None:
-        # TODO: Increase class attributes here!
+    def increase_class_attributes(self, amount: int = 1) -> None:
+        self.parent.fighter.class_ability_rank += amount
 
-        self.engine.message_log.add_message("You increased your class attributes")
+        self.engine.message_log.add_message("Your class ability grows stronger!")
 
         self.increase_level()
     

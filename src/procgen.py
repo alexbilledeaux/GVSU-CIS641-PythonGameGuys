@@ -50,10 +50,10 @@ cave_max_monsters_by_floor = [
 ]
 
 item_chances: Dict[int, List[Tuple[Entity, int]]] = {
-    0: [(entity_factories.health_potion, 35), (entity_factories.armor_repair_kit, 15)],
-    2: [(entity_factories.confusion_scroll, 10), (entity_factories.antidote, 15)],
+    0: [(entity_factories.health_potion, 35), (entity_factories.armor_repair_kit, 15), (entity_factories.arrow, 15), (entity_factories.dagger, 5)],
+    2: [(entity_factories.confusion_scroll, 10), (entity_factories.antidote, 15), (entity_factories.leather_armor, 10), (entity_factories.short_bow, 5), (entity_factories.shortsword, 5)],
     4: [(entity_factories.lightning_scroll, 25), (entity_factories.sword, 5)],
-    6: [(entity_factories.fireball_scroll, 25), (entity_factories.chain_mail, 15)],
+    6: [(entity_factories.fireball_scroll, 25), (entity_factories.chain_mail, 10)],
 }
 
 enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {

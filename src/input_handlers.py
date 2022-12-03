@@ -253,7 +253,7 @@ class LevelUpEventHandler(AskUserEventHandler):
         console.draw_frame(
             x=x,
             y=0,
-            width=35,
+            width=50,
             height=9,
             title=self.TITLE,
             clear=True,
@@ -282,7 +282,7 @@ class LevelUpEventHandler(AskUserEventHandler):
         console.print(
             x=x + 1,
             y=7,
-            string=f"d) Class attributes",
+            string=f"d) Class Ability (+{self.engine.player.fighter.abilityIncrement}% chance to {self.engine.player.fighter.abilityDescription}.)",
         )
 
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[ActionOrHandler]:
