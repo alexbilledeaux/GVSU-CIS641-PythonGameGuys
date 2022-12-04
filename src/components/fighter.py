@@ -24,6 +24,8 @@ class Fighter(BaseComponent):
         self.poison_dmg = poison_dmg
         self.current_poison = 0
         self.class_ability_rank = 0
+        self.poison_active = False
+        self.poison_threshold = int(float(self.max_hp * 0.2))
 
     @property
     def hp(self) -> int:
@@ -107,14 +109,28 @@ class Fighter(BaseComponent):
         else:
             self.hp -= amount    
     
-    def heal_poison(self) -> None:
-        self.current_poison = 0
+    def heal_poison(self, amount) -> None:
+        new_poison_value = self.current_poison - amount
+
+        if new_poison_value < 0:
+            new_poison_value = 0
+
+        self.current_poison = new_poison_value
 
     def take_poison_damage(self) -> None:
-        if self.current_poison > 4:
-            self.hp -= self.current_poison
-            self.engine.message_log.add_message(f"Your poison build-up was too much! You take {self.current_poison} damage as your body purges toxins!")
-            self.heal_poison()
+        if not self.poison_active:
+            if self.current_poison > self.poison_threshold:
+                self.poison_active = True
+                self.hp -= 1
+                self.engine.message_log.add_message(f"Your poison build-up was too much! You start to take damage as your body begins to purge the toxins!")
+                self.current_poison -= 1
+        else:
+            self.hp -= 1
+            self.engine.message_log.add_message(f"You take 1 point of damage from your poison build up!")
+            self.current_poison -= 1
+            if self.current_poison == 0:
+                self.engine.message_log.add_message(f"Your body has been purged of toxins!")
+                self.poison_active = False
 
 class Ranger(Fighter):
     def __init__(self, hp: int, base_defense: int, base_power: int, poison_dmg: int):
@@ -131,7 +147,7 @@ class Ranger(Fighter):
                 _copy.parent = target.inventory
                 target.inventory.items.append(_copy)
                 self.engine.message_log.add_message(f"The {item.name} looks recoverable!")
-            elif random.random() < (0.5 + ((self.abilityIncrement/100) * self.class_ability_rank)) and not target.is_alive and len(target.inventory.items) < target.inventory.capacity:
+            elif random.random() < (0.8 + ((self.abilityIncrement/100) * self.class_ability_rank)) and not target.is_alive and len(target.inventory.items) < target.inventory.capacity:
                 _copy = copy.deepcopy(item)
                 _copy.spawn(self.gamemap, target.x, target.y)
             else:

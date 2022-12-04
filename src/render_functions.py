@@ -26,9 +26,11 @@ def render_bar(
 ) -> None:
     bar_width = int(float(player.fighter.hp) / player.fighter.max_hp * total_width)
     bar_poison_width = int(float(player.fighter.current_poison) / player.fighter.max_hp * total_width)
+    bar_xp_width = int(float(player.level.current_xp) / player.level.experience_to_next_level * total_width)
 
     console.draw_rect(x = 0, y = 45, width = total_width, height = 1, ch = 1, bg = color.bar_empty)
-    console.draw_rect(x = 0, y = 46, width = total_width, height = 1, ch = 1, bg = color.bar_armor_empty)
+    console.draw_rect(x = 0, y = 46, width = total_width, height = 1, ch = 1, bg = color.bar_xp_empty)
+    console.draw_rect(x = 0, y = 44, width = total_width, height = 1, ch = 1, bg = color.bar_armor_empty) 
 
     if bar_width > 0:
         console.draw_rect(
@@ -45,20 +47,35 @@ def render_bar(
                 x = bar_width - bar_poison_width, y = 45, width = bar_poison_width, height = 1, ch = 1, bg = color.bar_poison
             )
     
+    if bar_xp_width > 0:
+        console.draw_rect(
+            x = 0, y = 46, width = bar_xp_width, height = 1, ch = 1, bg = color.bar_xp
+        )
+
     if player.equipment.armor != None:
         bar_armor_width = int(float(player.equipment.armor.equippable.durability) / player.equipment.armor.equippable.max_durability * total_width)
-        console.draw_rect(x = 0, y = 46, width = bar_armor_width, height = 1, ch = 1, bg = color.bar_armor)
+        console.draw_rect(x = 0, y = 44, width = bar_armor_width, height = 1, ch = 1, bg = color.bar_armor)
         console.print(
-            x = 1, y = 46, string = f"Armor: {player.equipment.armor.equippable.durability}/{player.equipment.armor.equippable.max_durability}", fg = color.bar_text
+            x = 1, y = 44, string = f"Armor: {player.equipment.armor.equippable.durability}/{player.equipment.armor.equippable.max_durability}", fg = color.bar_text
         )
 
     else:
         console.print(
-            x = 1, y = 46, string = f"No Armor", fg = color.bar_text
+            x = 1, y = 44, string = f"No Armor", fg = color.bar_text
         )
 
+    if player.fighter.current_poison > 0:
+        console.print(
+                x = 1, y = 45, string = f"HP: {player.fighter.hp}/{player.fighter.max_hp} ({player.fighter.current_poison})", fg = color.bar_text
+            )
+        
+    else:
+        console.print(
+                x = 1, y = 45, string = f"HP: {player.fighter.hp}/{player.fighter.max_hp}", fg = color.bar_text
+            )
+
     console.print(
-        x = 1, y = 45, string = f"HP: {player.fighter.hp}/{player.fighter.max_hp}", fg = color.bar_text
+        x = 1, y = 46, string = f"XP: {player.level.current_xp}/{player.level.experience_to_next_level}", fg = color.bar_text
     )
 
 def render_dungeon_level(

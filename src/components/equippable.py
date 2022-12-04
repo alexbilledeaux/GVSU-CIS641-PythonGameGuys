@@ -29,11 +29,14 @@ class Equippable(BaseComponent):
     def take_damage(self, amount: int) -> None:
         self.durability -= amount
 
-    def repair_damage(self, amount: int) -> None:
-        new_durability = self.durability + amount
+    def repair_damage(self, amount: int) -> int:
+        amount_repaired = amount
+        new_durability = self.durability + amount_repaired
         if new_durability > self.max_durability:
+            amount_repaired -= (new_durability - self.max_durability)
             new_durability = self.max_durability
         self.durability = new_durability
+        return amount_repaired
 
 
 class Dagger(Equippable):
@@ -56,6 +59,14 @@ class ChainMail(Equippable):
     def __init__(self) -> None:
         super().__init__(equipment_type=EquipmentType.ARMOR, defense_bonus=1, max_durability=25)
 
+class SteelPlate(Equippable):
+    def __init__(self) -> None:
+        super().__init__(equipment_type=EquipmentType.ARMOR, defense_bonus=2, max_durability=25)
+
 class ShortBow(Equippable):
     def __init__(self) -> None:
         super().__init__(equipment_type=EquipmentType.WEAPON, power_bonus=1)
+
+class LongBow(Equippable):
+    def __init__(self) -> None:
+        super().__init__(equipment_type=EquipmentType.WEAPON, power_bonus=2)

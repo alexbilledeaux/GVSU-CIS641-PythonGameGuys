@@ -143,9 +143,9 @@ class ArmorRepairConsumable(Consumable):
         if consumer.equipment.armor.equippable.max_durability == consumer.equipment.armor.equippable.durability:
             raise Impossible(f"Your armor is undamaged.")
         
-        consumer.equipment.armor.equippable.repair_damage(self.amount)
+        amount_repaired = consumer.equipment.armor.equippable.repair_damage(self.amount)
         self.engine.message_log.add_message(
-            f"You repair your {consumer.equipment.armor.name}!",
+            f"You repair your {consumer.equipment.armor.name} for {amount_repaired} points!",
             color.health_recovered,
         )
         self.consume()
@@ -164,7 +164,7 @@ class AntidoteConsumable(Consumable):
                 f"You consume the {self.parent.name}, and are cured of poison!",
                 color.health_recovered,
             )
-            consumer.fighter.heal_poison
+            consumer.fighter.heal_poison(100)
             self.consume()
             return action.entity
         else:
@@ -200,8 +200,8 @@ class LightningDamageConsumable(Consumable):
             raise Impossible("No enemy is close enough to strike.")
 
 class Arrow(Consumable):
-    def __init__(self) -> None:
-        self.damage = 0
+    def __init__(self, damage: int) -> None:
+        self.damage = damage
     
     def get_action(self, consumer: Actor) -> SingleRangedAttackHandler:
         self.engine.message_log.add_message(
@@ -214,7 +214,7 @@ class Arrow(Consumable):
     
     def activate(self, action: actions.ItemAction) -> Actor:
         consumer = action.entity
-        self.damage = consumer.fighter.power + 1
+        self.total_damage = consumer.fighter.power + self.damage
         target = action.target_actor
 
 
@@ -230,8 +230,8 @@ class Arrow(Consumable):
             raise Impossible("You cannot shoot yourself!")
         
         self.engine.message_log.add_message(
-                f"The {target.name} is hit by your arrow, taking {self.damage} damage!"
+                f"The {target.name} is hit by your arrow, taking {self.total_damage} damage!"
             )
-        target.fighter.take_damage(self.damage)
+        target.fighter.take_damage(self.total_damage)
         self.consume()
         return target

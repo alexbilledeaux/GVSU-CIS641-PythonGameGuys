@@ -19,22 +19,25 @@ if TYPE_CHECKING:
 max_items_by_floor = [
     (1, 1),
     (4, 2),
+    (6, 3),
 ]
 
 cave_min_items_by_floor = [
-    (2, 4),
-    (4, 8),
+    (2, 5),
+    (4, 10),
+    (6, 15),
 ]
 
 cave_max_items_by_floor = [
-    (2, 10),
-    (4, 20),
+    (2, 15),
+    (4, 25),
+    (6, 30),
 ]
 
 max_monsters_by_floor = [
     (1, 2),
     (4, 3),
-    (6, 5),
+    (6, 4),
 ]
 
 cave_min_monsters_by_floor = [
@@ -44,31 +47,33 @@ cave_min_monsters_by_floor = [
 ]
 
 cave_max_monsters_by_floor = [
-    (2, 15),
-    (4, 20),
-    (6, 30),
+    (2, 20),
+    (4, 25),
+    (6, 35),
 ]
 
 item_chances: Dict[int, List[Tuple[Entity, int]]] = {
-    0: [(entity_factories.health_potion, 35), (entity_factories.armor_repair_kit, 15), (entity_factories.arrow, 15), (entity_factories.dagger, 5)],
-    2: [(entity_factories.confusion_scroll, 10), (entity_factories.antidote, 15), (entity_factories.leather_armor, 10), (entity_factories.short_bow, 5), (entity_factories.shortsword, 5)],
-    4: [(entity_factories.lightning_scroll, 25), (entity_factories.sword, 5)],
-    6: [(entity_factories.fireball_scroll, 25), (entity_factories.chain_mail, 10)],
+    0: [(entity_factories.health_potion, 35), (entity_factories.armor_repair_kit, 15), (entity_factories.arrow, 20), (entity_factories.dagger, 5)],
+    2: [(entity_factories.confusion_scroll, 10), (entity_factories.arrow, 10), (entity_factories.broadhead_arrow, 10), (entity_factories.antidote, 15),
+     (entity_factories.leather_armor, 10), (entity_factories.short_bow, 5), (entity_factories.shortsword, 5), (entity_factories.greater_health_potion, 2)],
+    4: [(entity_factories.lightning_scroll, 25), (entity_factories.broadhead_arrow, 10), (entity_factories.long_bow, 5), (entity_factories.sword, 5),
+     (entity_factories.chain_mail, 10), (entity_factories.greater_health_potion, 18)],
+    6: [(entity_factories.fireball_scroll, 25), (entity_factories.steel_plate, 10), (entity_factories.broadhead_arrow, 10), (entity_factories.barbed_arrow, 10),],
 }
 
 enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
     0: [(entity_factories.orc, 80)],
     3: [(entity_factories.troll, 15)],
-    5: [(entity_factories.troll, 30)],
-    7: [(entity_factories.troll, 60)],
+    5: [(entity_factories.troll, 30), (entity_factories.elite_orc, 20)],
+    7: [(entity_factories.elite_troll, 15), entity_factories.elite_orc, 70],
 }
 
 cave_enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
-    0:[(entity_factories.orc, 60)],
-    2:[(entity_factories.bat, 30)],
+    0:[(entity_factories.orc, 50)],
+    2:[(entity_factories.bat, 40)],
     4:[(entity_factories.bat, 60), (entity_factories.spider, 10)],
-    6:[(entity_factories.spider, 25)],
-    8:[(entity_factories.spider, 50)]
+    6:[(entity_factories.spider, 25), (entity_factories.giant_bat, 10)],
+    8:[(entity_factories.giant_spider, 10), (entity_factories.giant_bat, 30)]
 
 }
 
