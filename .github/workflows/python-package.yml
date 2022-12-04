@@ -48,6 +48,7 @@ jobs:
           sudo apt-get install libsdl2-dev
       - name: Install Python dependencies
         run: |
+          cd src
           python -m pip install --upgrade pip
           python -m pip install PyInstaller==${{ env.pyinstaller-version }} -r requirements.txt
       - name: Run PyInstaller
@@ -55,10 +56,12 @@ jobs:
           PYTHONOPTIMIZE: 1 # Enable optimizations as if the -O flag is given.
           PYTHONHASHSEED: 42 # Try to ensure deterministic results.
         run: |
+          cd src
           pyinstaller build.spec
       # This step exists for debugging.  Such as checking if data files were included correctly by PyInstaller.
       - name: List distribution files
         run: |
+          cd src
           find dist
       # Archive the PyInstaller build using the appropriate tool for the platform.
       - name: Tar files
