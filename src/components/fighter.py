@@ -190,7 +190,7 @@ class Mage(Fighter):
     def use_consumable(self, item, target) -> None:
         # The mage has a chance to recover scrolls upon use
         if item.char == "~":
-            if random.random() < (0.5 + ((self.abilityIncrement/100) * self.class_ability_rank)):
+            if random.random() < (0.6 + ((self.abilityIncrement/100) * self.class_ability_rank)):
                 _copy = copy.deepcopy(item)
                 _copy.parent = self.parent.inventory
                 self.parent.inventory.items.append(_copy)

@@ -58,14 +58,14 @@ item_chances: Dict[int, List[Tuple[Entity, int]]] = {
      (entity_factories.leather_armor, 10), (entity_factories.short_bow, 5), (entity_factories.shortsword, 5), (entity_factories.greater_health_potion, 2)],
     4: [(entity_factories.lightning_scroll, 25), (entity_factories.broadhead_arrow, 10), (entity_factories.long_bow, 5), (entity_factories.sword, 5),
      (entity_factories.chain_mail, 10), (entity_factories.greater_health_potion, 18)],
-    6: [(entity_factories.fireball_scroll, 25), (entity_factories.steel_plate, 10), (entity_factories.broadhead_arrow, 10), (entity_factories.barbed_arrow, 10),],
+    6: [(entity_factories.fireball_scroll, 25), (entity_factories.steel_plate, 10), (entity_factories.broadhead_arrow, 10), (entity_factories.barbed_arrow, 10)],
 }
 
 enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
     0: [(entity_factories.orc, 80)],
     3: [(entity_factories.troll, 15)],
     5: [(entity_factories.troll, 30), (entity_factories.elite_orc, 20)],
-    7: [(entity_factories.elite_troll, 15), entity_factories.elite_orc, 70],
+    7: [(entity_factories.elite_troll, 15), (entity_factories.elite_orc, 70)],
 }
 
 cave_enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {

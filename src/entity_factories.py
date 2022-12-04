@@ -134,7 +134,7 @@ player_mage = Actor(
     ai_cls = HostileEnemy,
     equipment=Equipment(),
     fighter = Mage(hp = 25, base_defense = 1, base_power = 1, poison_dmg = 0),
-    inventory=Inventory(capacity=26, items=[lightning_scroll, lightning_scroll, fireball_scroll, fireball_scroll, confusion_scroll, confusion_scroll]),
+    inventory=Inventory(capacity=26, items=[lightning_scroll, lightning_scroll, lightning_scroll, lightning_scroll, fireball_scroll, fireball_scroll, fireball_scroll, confusion_scroll, confusion_scroll]),
     level=Level(level_up_base=200),
 )
 
