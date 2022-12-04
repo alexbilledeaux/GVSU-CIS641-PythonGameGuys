@@ -67,6 +67,7 @@ jobs:
       - name: Tar files
         if: runner.os != 'Windows'
         run: |
+          cd src
           tar --format=ustar -czvf ${{ env.archive-name }}.tar.gz dist/*/
       - name: Archive files
         if: runner.os == 'Windows'
