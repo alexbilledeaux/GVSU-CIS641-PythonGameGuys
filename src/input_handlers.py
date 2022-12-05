@@ -122,7 +122,7 @@ class EventHandler(BaseEventHandler):
         if isinstance(action_or_state, BaseEventHandler):
             return action_or_state
         if self.handle_action(action_or_state):
-            # A valid actioon was performed.
+            # A valid action was performed.
             if not self.engine.player.is_alive:
                 # The player was killed sometime during or after the action.
                 return GameOverEventHandler(self.engine)
@@ -565,7 +565,34 @@ class MainGameEventHandler(EventHandler):
         # No valid key was pressed
         return action
 
-class GameOverEventHandler(EventHandler):
+class GameOverEventHandler(AskUserEventHandler):
+    """
+    This handler asks the user whether to start a new game or to close the game.
+    """
+
+    def __init__(self, engine: Engine):
+        self.engine = engine
+        self._new_game_behavior = None
+
+    def set_create_main_menu_function(self, fn) -> None:
+        self.create_main_menu_fn = fn
+
+    def on_render(self, console: tcod.Console) -> None:
+        super().on_render(console)
+
+        console.draw_frame(
+            x=0,
+            y=0,
+            width=15,
+            height=4,
+            title="Game Over",
+            clear=True,
+            fg=(255, 255, 255),
+            bg=(0, 0, 0),
+        )
+        console.print(1, 1, "(M) Main menu")
+        console.print(1, 2, "(Q) Quit")
+
     def on_quit(self) -> None:
         """Handle exiting out of a finished game."""
         if os.path.exists("savegame.sav"):
@@ -575,9 +602,12 @@ class GameOverEventHandler(EventHandler):
     def ev_quit(self, event: tcod.event.Quit) -> None:
         self.on_quit()
 
-    def ev_keydown(self, event: tcod.event.KeyDown) -> None:
-        if event.sym == tcod.event.K_ESCAPE:
+    def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[ActionOrHandler]:
+        if event.sym == tcod.event.K_q or event.sym == tcod.event.K_ESCAPE:
             self.on_quit()
+        elif event.sym == tcod.event.K_m:
+            return self.create_main_menu_fn()
+
 
 CURSOR_Y_KEYS = {
     tcod.event.K_UP: -1,

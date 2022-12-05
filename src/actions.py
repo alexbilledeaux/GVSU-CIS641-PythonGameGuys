@@ -180,8 +180,6 @@ class MeleeAction(ActionWithDirection):
             )
             target.fighter.take_damage(1)
         self.entity.fighter.take_poison_damage()
-        
-        
 
 
 class MovementAction(ActionWithDirection):

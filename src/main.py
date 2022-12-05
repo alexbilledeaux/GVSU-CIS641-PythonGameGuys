@@ -16,6 +16,10 @@ def save_game(handler: input_handlers.BaseEventHandler, filename: str) -> None:
         print("Game saved.")
 
 
+def create_main_menu():
+    return setup_game.MainMenu()
+
+
 def main() -> None:
     screen_width = 80
     screen_height = 50
@@ -24,7 +28,7 @@ def main() -> None:
         "data/dejavu10x10_gs_tc.png", 32, 8, tcod.tileset.CHARMAP_TCOD
     )
 
-    handler: input_handlers.BaseEventHandler = setup_game.MainMenu()
+    handler: input_handlers.BaseEventHandler = create_main_menu()
 
     with tcod.context.new_terminal(
         screen_width,
@@ -45,6 +49,11 @@ def main() -> None:
                     for event in tcod.event.wait():
                         context.convert_event(event)
                         handler = handler.handle_events(event)
+
+                    if isinstance(handler, input_handlers.GameOverEventHandler):
+                        # The player was killed sometime while handling events
+                        handler.set_create_main_menu_function(create_main_menu)
+
                 except Exception:  # Handle exceptions in game.
                     traceback.print_exc()  # Print error to stderr.
                     # Then print the error to the message log.
