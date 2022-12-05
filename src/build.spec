@@ -28,7 +28,7 @@ exe = EXE(
     strip=False,
     upx=True,
     console=True,  # Set to False to disable the Windows terminal.
-    icon="icon.ico",  # Windows icon file.
+    icon="data/icon.ico",  # Windows icon file.
 )
 coll = COLLECT(
     exe,
