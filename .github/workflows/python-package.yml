@@ -2,11 +2,7 @@
 
 name: Deploy
 
-#on: [push, pull_request]
-on:
-  push:
-    branches:
-      - "test_luis"
+on: [push, pull_request]
 
 defaults:
   run:
