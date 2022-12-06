@@ -48,14 +48,17 @@ This document holds all the functional and non-functional requirements for our b
 1. Performance Requirements
    1. The level generator shall take no more than 10 seconds to create a new level.
    2. Navigating between menu screens shall not take more than 1 second.
-   3. Each level shall be completable within 5 minutes.
-   4. One full run shall take no more than 30 minutes.
-   5. The player character shall have a maximum number of hitpoints that cannot be exceeded.
-   6. The game shall respond to player input within 0.5 seconds.
-   7. A saved game file shall not exceed 2mb.
-   8. A saved game shall load in no more than 1 second.
-   9. The game executable shall not be larger than 300kb.
-   10. The game shall not use more than 100 MB of RAM when it runs.
+   3. The game application shall take no more than 1 second to start.
+   4. The game shall respond to player input within 0.5 seconds.
+   5. A saved game shall load in no more than 1 second.
+
+2. Miscellaneous Requirements
+   1. Each level shall be completable within 5 minutes.
+   2. The player character shall have a maximum number of hitpoints that cannot be exceeded.
+   3. A saved game file shall not exceed 2mb.
+   4. The game executable shall not be larger than 300kb.
+   5. The game shall not use more than 100 MB of RAM when it runs.
+   6. One full run shall take no more than 30 minutes.
 
 2. Security Requirements
    1. The game shall not store any information about the user.
