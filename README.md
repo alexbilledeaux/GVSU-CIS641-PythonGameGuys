@@ -15,8 +15,9 @@ The cellular automata tutorial we used can be found [here](https://gamedevelopme
 ## Prerequisites
 This game has no prerequisites to run, if you intend to play it with one of our packaged executables. If you're interested in running the source code, you'll need to download the contents of this Github repository. Scroll to the top of the page, select '<> Code' in the menu, and select Download ZIP from the dropdown that appears.
 
-Once the source code is present on your computer, you'll need to install Python 3.7 or higher to compile the source code and run the game. Head over to the [Python downloads](https://www.python.org/downloads/) page to get a version of the software that is appropriate for your computer. After you've installed python, open your Command Prompt or Terminal and navigate to the GVSU-CIS641-PythonGameGuys folder you downloaded. The game source code is located in the /src subdirectory. From the /src directory, run the following two commands...
-pip install -r requirements.txt
+Once the source code is present on your computer, you'll need to install Python 3.7 or higher to compile the source code and run the game. Head over to the [Python downloads](https://www.python.org/downloads/) page to get a version of the software that is appropriate for your computer. After you've installed python, open your Command Prompt or Terminal and navigate to the GVSU-CIS641-PythonGameGuys folder you downloaded. The game source code is located in the /src subdirectory. From the /src directory, run the following two commands.  
+
+pip install -r requirements.txt  
 python3 main.py
 
 
