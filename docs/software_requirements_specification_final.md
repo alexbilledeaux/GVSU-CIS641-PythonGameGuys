@@ -141,10 +141,10 @@ In this section, we have listed all artifacts and the functional/nonfunctional r
 | Artifact ID | Artifact Name | Requirement ID |
 | :-------------: | :----------: | :----------: |
 |ClassDescription_ObjectDiagram_Actor_Inventory_Item_Consumable_Equippable.pdf| Item classes | FR14 .. FR19, FR28 .. FR33 |
-|ClassDescription_ObjectDiagram_Engine_GameMap_GameWorld.pdf| Classes in diagram | FR6, FR13 (level generation), NFR1 |
+|ClassDescription_ObjectDiagram_Engine_GameMap_GameWorld.pdf| Classes in diagram | FR6, FR13 , NFR1 |
 |ClassDescription_ObjectDiagram_Message_MessageLog_Fighter_Entity.pdf| Classes in diagram | FR35 |
 | Combined_Team_Class_Diagram-Page-1.pdf | Class diagram | FR6 .. FR19, FR28 .. FR33, FR35, NFR1 |
-| Enemy Class and Object Diagram.pdf | Class and object diagram | FR21, FR22, FR7 .. FR1 |
+| Enemy Class and Object Diagram.pdf | Enemy Class and object diagram | FR7 .. FR12, FR21, FR22 |
 
 ## Activity Diagram Traceability
 | Artifact ID | Artifact Name | Requirement ID |
