@@ -160,3 +160,6 @@ This section contains all the links to the actual artifacts in the github reposi
 * [Gameplay and Menu/Interface Use Case Diagrams](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/Gameplay_MenuInterface_UseCaseDiagram.pdf)
 * [State Machine Diagram](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/State%20Machine%20Diagram.pdf)
 * [Behavior Diagram](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/behavior%20diagram.pdf)
+* [Consumable CRC Card](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/CRC%20Consumable.pdf)
+* [Enemy CRC Card](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/Enemy%20CRC.pdf)
+* [GameMap CRC Card](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/Game%20Map%20CRC.pdf)
