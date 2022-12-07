@@ -59,16 +59,17 @@ This section holds all of our software requirements, starting with functional, t
 | FR31 | The game shall display a message when the player successfully unequips a piece of equipment. |
 | FR32 | The player shall be able to display the contents of their inventory. |
 | FR33 | The game shall prevent the player from using a healing consumable when they are at maximum hitpoints. |
+| FR34 | Consumables shall be removed from the player's inventory after use. |
 
 ### Display and UI
 | ID | Requirement |
 | :-------------: | :----------: |
-| FR34 | Once a game has started, the UI shall display an event log, 5 lines high, which shows the most recent messages. |
-| FR35 | The player's HP bar shall remain visible. |
-| FR36 | The UI shall display the current dungeon level. |
-| FR37 | The game shall display tiles of the map as they are seen by the player. |
-| FR38 | The game shall show entities on the map while they are in the player's field of view. |
-| FR39 | The game shall hide entities on the map while they are not in the player's field of view. |
+| FR35 | Once a game has started, the UI shall display an event log, 5 lines high, which shows the most recent messages. |
+| FR36 | The player's HP bar shall remain visible. |
+| FR37 | The UI shall display the current dungeon level. |
+| FR38 | The game shall display tiles of the map as they are seen by the player. |
+| FR39 | The game shall show entities on the map while they are in the player's field of view. |
+| FR40 | The game shall hide entities on the map while they are not in the player's field of view. |
 
 ## Non-Functional Requirements
 
@@ -133,32 +134,34 @@ In this section, we have listed all artifacts and the functional/nonfunctional r
 ## Use Case Traceability
 | Artifact ID | Artifact Name | Requirement ID |
 | :-------------: | :----------: | :----------: |
-|Gameplay_MenuInterface_UseCaseDiagram.pdf| Menu Interface use case diagram |                               FR1, FR2, FR3, FR4, FR5 (game menu)                               |
-|Gameplay_MenuInterface_UseCaseDiagram.pdf|    Gameplay use case diagram    |                     FR2, FR4, FR5 (gameplay) - FR8, FR15 (level generation)                     |
+|Gameplay_MenuInterface_UseCaseDiagram.pdf| Menu Interface use case diagram | FR1 .. FR5 |
+|Gameplay_MenuInterface_UseCaseDiagram.pdf| Gameplay use case diagram | FR13, FR20, FR22, FR24, FR25 |
 
 ## Class Diagram Traceability
 | Artifact ID | Artifact Name | Requirement ID |
 | :-------------: | :----------: | :----------: |
-|ClassDescription_ObjectDiagram_Actor_Inventory_Item_Consumable_Equippable.pdf|          Item classes           |                       FR1 .. FR6 (items) - FR9 .. FR14 (level generation)                       |
-|ClassDescription_ObjectDiagram_Engine_GameMap_GameWorld.pdf|       Classes in diagram        |                        FR1, FR8 (level generation) - NFR1 (performance)                         |
-|ClassDescription_ObjectDiagram_Message_MessageLog_Fighter_Entity.pdf|       Classes in diagram        |                                      FR1 (display and UI)                                       |
-|Combined_Team_Class_Diagram-Page-1.pdf|          Class diagram          | FR1 .. FR6 (items) - FR1 .. FR14 (level generation) - FR1 (display and UI) - NFR1 (performance) |
-|Enemy Class and Object Diagram.pdf|    Class and object diagram     |                       FR1, FR2 (gameplay) - FR2 .. FR7 (level generation)                       |
+|ClassDescription_ObjectDiagram_Actor_Inventory_Item_Consumable_Equippable.pdf| Item classes | FR14 .. FR19, FR28 .. FR33 |
+|ClassDescription_ObjectDiagram_Engine_GameMap_GameWorld.pdf| Classes in diagram | FR6, FR13 (level generation), NFR1 |
+|ClassDescription_ObjectDiagram_Message_MessageLog_Fighter_Entity.pdf| Classes in diagram | FR35 |
+| Combined_Team_Class_Diagram-Page-1.pdf | Class diagram | FR6 .. FR19, FR28 .. FR33, FR35, NFR1 |
+| Enemy Class and Object Diagram.pdf | Class and object diagram | FR21, FR22, FR7 .. FR1 |
 
 ## Activity Diagram Traceability
 | Artifact ID | Artifact Name | Requirement ID |
 | :-------------: | :----------: | :----------: |
-| AttackEntity_UseItem_ActivityDiagrams.pdf |          Attack Entity          |                                  FR2, FR5, FR7, FR8 (gameplay)             |
-| AttackEntity_UseItem_ActivityDiagrams.pdf |            Use Item             |                                        FR5, FR6 (items)                                         |
+| AttackEntity_UseItem_ActivityDiagrams.pdf | Attack Entity | FR22, FR25, FR27, FR28 |
+| AttackEntity_UseItem_ActivityDiagrams.pdf | Use Item | FR32, FR33 |
 
 ## Miscellaneous Artifacts Traceability
-|                Artifact ID                |          Artifact Name          |                                         Requirement ID                                          |
-|:-----------------------------------------:|:-------------------------------:|:-----------------------------------------------------------------------------------------------:|
-|      Attack_MethodSpecification.pdf       |   Attack method specification   |                                  FR2, FR5, FR7, FR8 (gameplay)                                  |
-|                  CRC.pdf                  |            Enemy CRC            |                                       FR1, FR2 (gameplay)                                       |
-|Fighter_Actor_Database_Table.pdf|      Relational DB diagram      |                  FR2, FR4 .. FR6 (gameplay) - FR7 (gameplay) - NFR2 (cultural)                  |
-|State Machine Diagram.pdf|      State machine diagram      |                  FR1 (game menu),  FR1 (level generation), FR2, FR5 (gameplay)                  |
-|behavior diagram.pdf|        behavior diagram         |       FR2, FR5 (gameplay), FR1 (display and UI)       |
+| Artifact ID | Artifact Name | Requirement ID |
+|:-------:|:-------:|:-------:|
+| Attack_MethodSpecification.pdf | Attack method specification | FR22, FR25, FR27, FR28 |
+| CRC Consumable.pdf | Consumable CRC | FR34 |
+| Enemy CRC.pdf | Enemy CRC | FR21, FR22 |
+| Game Map CRC.pdf | Game Map CRC | FR38, FR40 |
+| Fighter_Actor_Database_Table.pdf | Relational DB diagram | FR22, FR24 .. FR26, FR27, NFR24 |
+| State Machine Diagram.pdf | State machine diagram | FR1, FR6, FR12, FR15 |
+| behavior diagram.pdf | Behavior Diagram | FR22, FR25, FR35 |
 
 
 # Software Artifacts
@@ -166,7 +169,7 @@ In this section, we have listed all artifacts and the functional/nonfunctional r
 This section contains all the links to the actual artifacts in the github repository.
 
 * [Attack Entity and Use Item Activity Diagrams](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/AttackEntity_UseItem_ActivityDiagrams.pdf)
-* [Attack Entity Use Case](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/Attack_MethodSpecification.pdf)
+* [Attack Entity Method Description](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/Attack_MethodSpecification.pdf)
 * [Enemy Class and Object Diagram](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/Enemy%20Class%20and%20Object%20Diagram.pdf)
 * [Class Diagram](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/Combined_Team_Class_Diagram-Page-1.pdf)
 * [Actor/Inventory/Item/Consumable/Equippable Object Diagrams and Descriptions](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/blob/master/artifacts/ClassDescription_ObjectDiagram_Actor_Inventory_Item_Consumable_Equippable.pdf)
