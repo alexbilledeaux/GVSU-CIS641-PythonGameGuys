@@ -141,8 +141,22 @@ In this section, we have listed all artifacts and the functional/nonfunctional r
 
 
 ## Activity Diagram Traceability
-| Artifact ID | Artifact Name | Requirement ID |
-| :-------------: | :----------: | :----------: |
+|                Artifact ID                |          Artifact Name          |                                         Requirement ID                                          |
+|:-----------------------------------------:|:-------------------------------:|:-----------------------------------------------------------------------------------------------:|
+| AttackEntity_UseItem_ActivityDiagrams.pdf |          Attack Entity          |                                  FR2, FR5, FR7, FR8 (gameplay)                                  |
+| AttackEntity_UseItem_ActivityDiagrams.pdf |            Use Item             |                                        FR5, FR6 (items)                                         |
+|      Attack_MethodSpecification.pdf       |   Attack method specification   |                                  FR2, FR5, FR7, FR8 (gameplay)                                  |
+|                  CRC.pdf                  |            Enemy CRC            |                                       FR1, FR2 (gameplay)                                       |
+|ClassDescription_ObjectDiagram_Actor_Inventory_Item_Consumable_Equippable.pdf|          Item classes           |                       FR1 .. FR6 (items) - FR9 .. FR14 (level generation)                       |
+|ClassDescription_ObjectDiagram_Engine_GameMap_GameWorld.pdf|       Classes in diagram        |                        FR1, FR8 (level generation) - NFR1 (performance)                         |
+|ClassDescription_ObjectDiagram_Message_MessageLog_Fighter_Entity.pdf|       Classes in diagram        |                                      FR1 (display and UI)                                       |
+|Combined_Team_Class_Diagram-Page-1.pdf|          Class diagram          | FR1 .. FR6 (items) - FR1 .. FR14 (level generation) - FR1 (display and UI) - NFR1 (performance) |
+|Enemy Class and Object Diagram.pdf|    Class and object diagram     |                       FR1, FR2 (gameplay) - FR2 .. FR7 (level generation)                       |
+|Fighter_Actor_Database_Table.pdf|      Relational DB diagram      |                  FR2, FR4 .. FR6 (gameplay) - FR7 (gameplay) - NFR2 (cultural)                  |
+|Gameplay_MenuInterface_UseCaseDiagram.pdf| Menu Interface use case diagram |                               FR1, FR2, FR3, FR4, FR5 (game menu)                               |
+|Gameplay_MenuInterface_UseCaseDiagram.pdf|    Gameplay use case diagram    |                     FR2, FR4, FR5 (gameplay) - FR8, FR15 (level generation)                     |
+|State Machine Diagram.pdf|      State machine diagram      |                  FR1 (game menu),  FR1 (level generation), FR2, FR5 (gameplay)                  |
+|behavior diagram.pdf|        behavior diagram         |       FR2, FR5 (gameplay), FR1 (display and UI)       |
 
 
 # Software Artifacts
