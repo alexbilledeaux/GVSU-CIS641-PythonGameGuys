@@ -1,4 +1,4 @@
-## Meeting Minutes 10-17-22
+## Meeting Minutes 10-24-22
 
 Team name: Python Game Guys
 
