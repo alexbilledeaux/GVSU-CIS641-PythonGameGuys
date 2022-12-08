@@ -26,3 +26,28 @@ To run the game, go to our [automated builds page](https://github.com/alexbilled
 
 ## Found a Bug?
 Thanks for contributing to our roguelike! Visit our [issues page](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/issues) and see if your issue has already been reported for the repo. If you don’t see anything similar, select the New Issue button to report your bug. Our team is composed entirely of volunteers, so we can’t provide an immediate timeline on bug fixes. Thanks for your patience.
+
+## How to Play
+Our game is an infinite roguelike, which means that you'll be delving into a multi-level dungeon and trying to get as deep as possible before dying. Each time you die, you'll restart the game from the beginning without carrying over any items or experience from your previous run.
+
+### The Classes
+Our roguelike has three player classes to choose from. The first class is the Ranger, who starts each run with a shortbow, light armor, and ten arrows. They specialize in the bow and have the ability to recover arrows from fallen enemies. The second class is the Warrior, who starts each run with heavy armor and a dagger. They specialize in melee combat and their strikes occassionally cause enemies to become dazed. Finally, you can play as the Mage. The Mage starts each run with several magic scrolls and has the ability to occasionally recover magic scrolls after use.
+
+### The Keyboard Controls
+| Key | Control |
+| :----: | :----: |
+| Up Arrow | Move Up |
+| Left Arrow | Move Left |
+| Right Arrow | Move Right |
+| Down Arrow | Move Down |
+| Home | Move Up + Left |
+| Pg Up | Move Up + Right |
+| End | Move Down + Left |
+| Pg Down | Move Down + Right |
+| . | Wait |
+| i | Open Inventory |
+| d | Drop Item from Inventory |
+| g | Pick Up |
+| c | View Character |
+| v | Message History |
+| esc | Exit Menu or Exit Program |
