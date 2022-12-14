@@ -22,7 +22,7 @@ python3 main.py
 
 
 ## Run Instructions
-To run the game, go to our [automated builds page](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/actions/runs/3615826989) and scroll down until you see the heading 'Artifacts'. There is a ZIP file titled 'automated-builds'. The file contains a Windows, Mac, and Linux builds of the game. Download the ZIP, uncompress the contents, and select the executable that is right for your computer. You're ready to play!
+To run the game, go to our [automated builds page](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/actions/workflows/python-package.yml), choose the most recent build, and scroll down until you see the heading 'Artifacts'. There is a ZIP file titled 'automated-builds'. The file contains a Windows, Mac, and Linux builds of the game. Download the ZIP, uncompress the contents, and select the executable that is right for your computer. You're ready to play!
 
 ## Found a Bug?
 Thanks for contributing to our roguelike! Visit our [issues page](https://github.com/alexbilledeaux/GVSU-CIS641-PythonGameGuys/issues) and see if your issue has already been reported for the repo. If you don’t see anything similar, select the New Issue button to report your bug. Our team is composed entirely of volunteers, so we can’t provide an immediate timeline on bug fixes. Thanks for your patience.
