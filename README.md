@@ -50,4 +50,5 @@ Our roguelike has three player classes to choose from. The first class is the Ra
 | g | Pick Up |
 | c | View Character |
 | v | Message History |
+| ctrl+. | Use Stairs |
 | esc | Exit Menu or Exit Program |
